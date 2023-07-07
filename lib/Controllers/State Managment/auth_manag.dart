@@ -3,7 +3,7 @@ import 'package:firebase/Modules/user.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../Views/Login Screens/home_page.dart';
+import '../../Views/Home Screens/home_page.dart';
 
 class AuthControl extends GetxController {
   RxBool isloading = false.obs;
