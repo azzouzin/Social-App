@@ -5,7 +5,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'Controllers/State Managment/theme_manag.dart';
 import 'Views/Login Screens/Register/register_page.dart';
 import 'Views/Compenents/theme.dart';
 

@@ -1,3 +1,4 @@
+import 'package:firebase/Controllers/State%20Managment/navigation_manag.dart';
 import 'package:firebase/Controllers/State%20Managment/theme_manag.dart';
 import 'package:get/get.dart';
 
@@ -8,5 +9,6 @@ class HomeBindings implements Bindings {
   void dependencies() {
     // TODO: implement dependencies
     Get.put<ThemeController>(ThemeController());
+    Get.put<NavController>(NavController());
   }
 }

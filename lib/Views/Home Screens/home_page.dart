@@ -1,5 +1,7 @@
+import 'package:firebase/Views/Compenents/bottomnavbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
 
 import '../../Controllers/State Managment/auth_manag.dart';
 
@@ -12,42 +14,40 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   AuthControl authControl = Get.find();
+
   var txt = 'light';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Center(
-            child: Column(
-              children: [
-                ElevatedButton(
-                  child: Text("LogOut"),
-                  onPressed: () {
-                    authControl.logout();
-                  },
-                ),
-                ElevatedButton(
-                  child: Text(txt),
-                  onPressed: () {
-                    Get.changeThemeMode(
-                        Get.isDarkMode ? ThemeMode.light : ThemeMode.dark);
-                    print(Get.isDarkMode);
-                    setState(() {
-                      txt = Get.isDarkMode == true ? 'light' : 'dark';
-                    });
-                  },
-                ),
-              ],
+      appBar: AppBar(title: Text("Home"), actions: [
+        Icon(
+          Iconsax.notification,
+          color: Colors.black,
+        ),
+        SizedBox(width: 16),
+        Icon(
+          Iconsax.search_normal4,
+          color: Colors.black,
+        ),
+        SizedBox(width: 16),
+      ]),
+      bottomNavigationBar: BottomNavBar(),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Center(
+              child: Column(
+                children: [],
+              ),
             ),
-          ),
-          Obx(() {
-            return Center(
-                child: authControl.isloading.value == true
-                    ? CircularProgressIndicator()
-                    : Container());
-          }),
-        ],
+            Obx(() {
+              return Center(
+                  child: authControl.isloading.value == true
+                      ? CircularProgressIndicator()
+                      : Container());
+            }),
+          ],
+        ),
       ),
     );
   }
