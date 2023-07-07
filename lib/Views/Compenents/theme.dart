@@ -14,8 +14,8 @@ final lightTheme = ThemeData(
     // Add your light theme properties here
     // For example:
     textTheme: TextTheme(
-      bodyText1: TextStyle(color: Colors.black), // Set the default text color
-      bodyText2: TextStyle(color: Colors.black), // Set the default text color
+      bodyMedium: TextStyle(
+          color: Colors.white, fontSize: 12, fontWeight: FontWeight.w700),
       // Add more properties to customize the TextTheme
     ),
     primaryColor: Colors.blue,
