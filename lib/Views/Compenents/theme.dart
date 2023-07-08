@@ -14,6 +14,11 @@ final lightTheme = ThemeData(
     // Add your light theme properties here
     // For example:
     textTheme: TextTheme(
+      bodySmall: TextStyle(
+          color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w700),
+
+      titleSmall: TextStyle(
+          color: Colors.black, fontSize: 15, fontWeight: FontWeight.w900),
       bodyMedium: TextStyle(
           color: Colors.white, fontSize: 12, fontWeight: FontWeight.w700),
       // Add more properties to customize the TextTheme

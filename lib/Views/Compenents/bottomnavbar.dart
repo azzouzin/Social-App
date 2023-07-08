@@ -29,14 +29,20 @@ class BottomNavBar extends StatelessWidget {
               label: 'Chats'),
           BottomNavigationBarItem(
               icon: Icon(
-                Iconsax.user,
+                Iconsax.add,
                 color: navController.currentpageclr[2],
+              ),
+              label: 'add'),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Iconsax.user,
+                color: navController.currentpageclr[3],
               ),
               label: 'Users'),
           BottomNavigationBarItem(
               icon: Icon(
                 Iconsax.setting5,
-                color: navController.currentpageclr[3],
+                color: navController.currentpageclr[4],
               ),
               label: 'settings'),
         ],

@@ -8,12 +8,17 @@ class NavController extends GetxController {
     Colors.grey,
     Colors.grey,
     Colors.grey,
+    Colors.grey,
   ].obs;
   RxInt selectedIndex = 0.obs;
 
   void gotopage(i) {
-    selectedIndex.value = i;
-    colorchange(i);
+    if (i == 2) {
+      Get.toNamed('/addpost');
+    } else {
+      selectedIndex.value = i;
+      colorchange(i);
+    }
   }
 
   colorchange(int index) {

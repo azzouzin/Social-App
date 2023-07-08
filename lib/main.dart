@@ -1,4 +1,6 @@
 import 'package:firebase/Controllers/Bindings/auth_bindings.dart';
+import 'package:firebase/Controllers/Bindings/home_bindings.dart';
+import 'package:firebase/Views/Home%20Screens/add_post.dart';
 import 'package:firebase/Views/Home%20Screens/home_page.dart';
 import 'package:firebase/Views/Login%20Screens/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -23,7 +25,9 @@ void main() async {
         name: '/register',
         page: (() => RegisterScreen()),
       ),
-      GetPage(name: '/home', page: (() => Homepage()), binding: AuthBindings())
+      GetPage(name: '/home', page: (() => Homepage()), binding: AuthBindings()),
+      GetPage(
+          name: '/addpost', page: (() => AddPost()), binding: HomeBindings())
     ],
   ));
 }
