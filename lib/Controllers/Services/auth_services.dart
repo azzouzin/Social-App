@@ -74,7 +74,10 @@ class AuthServices {
             name: name,
             phone: phone,
             uid: user.uid,
-            isEmailV: false));
+            isEmailV: false,
+            bio: "Write Your bio",
+            image:
+                'https://img.freepik.com/vecteurs-libre/homme-affaires-caractere-avatar-isole_24877-60111.jpg?size=626&ext=jpg'));
         return response == 'ok' ? 'ok' : 'Error';
       } else {
         // User registration failed
@@ -112,6 +115,15 @@ class AuthServices {
               "Registred in seccsecfully ${googleSignInAccount!.displayName}");
           print("Registred in seccsecfully ${googleSignInAccount!.email}");
           print("Registred in seccsecfully ${googleSignInAccount!.photoUrl}");
+
+          await creatuser(AppUser(
+              email: googleSignInAccount!.email,
+              bio: 'This is google sign in bio',
+              image: googleSignInAccount!.photoUrl,
+              isEmailV: false,
+              name: googleSignInAccount!.displayName,
+              phone: '+210 54823321',
+              uid: googleSignInAccount!.id));
         }
         return 'ok';
       } else {
@@ -140,8 +152,6 @@ class AuthServices {
   Future<String> creatuser(AppUser? appUser) async {
     String msg = 'ok';
     try {
-
-      
       FirebaseFirestore.instance
           .collection('users')
           .doc(appUser!.uid)

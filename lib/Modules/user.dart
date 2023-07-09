@@ -5,13 +5,17 @@ class AppUser {
   String? name;
   String email;
   String? phone;
+  String? image;
   String? uid;
+  String? bio;
   bool? isEmailV = false;
   AppUser({
     this.name,
     required this.email,
     this.phone,
     this.uid,
+    required this.bio,
+    required this.image,
     this.isEmailV,
   });
 
@@ -22,6 +26,8 @@ class AppUser {
       'phone': phone,
       'uid': uid,
       'isEmailV': isEmailV,
+      'image': image,
+      'bio': bio,
     };
   }
 
@@ -31,6 +37,8 @@ class AppUser {
       email: map['email'] as String,
       phone: map['phone'] != null ? map['phone'] as String : null,
       uid: map['uid'] != null ? map['uid'] as String : null,
+      image: map['image'] != null ? map['image'] as String : null,
+      bio: map['bio'] != null ? map['bio'] as String : null,
       isEmailV: map['isEmailV'] != null ? map['isEmailV'] as bool : null,
     );
   }

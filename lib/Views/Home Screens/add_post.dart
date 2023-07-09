@@ -1,3 +1,4 @@
+import 'package:firebase/Views/Compenents/bottomnavbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -9,6 +10,7 @@ class AddPost extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text("Add post"),
         leading: InkWell(
           onTap: () {
@@ -20,6 +22,7 @@ class AddPost extends StatelessWidget {
           ),
         ),
       ),
+      bottomNavigationBar: BottomNavBar(),
     );
   }
 }

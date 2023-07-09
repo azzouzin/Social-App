@@ -23,6 +23,8 @@ class Postitem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               //Profile picture
               ClipOval(
@@ -55,6 +57,11 @@ class Postitem extends StatelessWidget {
                     style: Get.textTheme.bodySmall,
                   ),
                 ],
+              ),
+
+              Image.network(
+                imgs[1],
+                scale: 30,
               ),
               Expanded(child: Container()),
               //three dots

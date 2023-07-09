@@ -16,6 +16,8 @@ final lightTheme = ThemeData(
     textTheme: TextTheme(
       bodySmall: TextStyle(
           color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w700),
+      headlineLarge: TextStyle(
+          color: Colors.white, fontSize: 17, fontWeight: FontWeight.w900),
 
       titleSmall: TextStyle(
           color: Colors.black, fontSize: 15, fontWeight: FontWeight.w900),

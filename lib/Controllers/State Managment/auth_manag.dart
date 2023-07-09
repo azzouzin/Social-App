@@ -17,7 +17,7 @@ class AuthControl extends GetxController {
     changeloadingstate();
     response = await authServices.login(_emailController, _passwordController);
     if (response == 'ok') {
-      Get.to(Homepage());
+      Get.offAllNamed('/home');
     } else {
       Get.snackbar('Error', response);
     }
@@ -28,7 +28,7 @@ class AuthControl extends GetxController {
     changeloadingstate();
     response = await authServices.loginWithGoogle();
     if (response == 'ok') {
-      Get.to(Homepage());
+      Get.offAllNamed('/home');
     } else {
       Get.snackbar('Error', response);
     }
