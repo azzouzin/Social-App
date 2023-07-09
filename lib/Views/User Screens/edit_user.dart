@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 import '../../Controllers/State Managment/navigation_manag.dart';
 import '../Compenents/utils.dart';
@@ -22,7 +23,9 @@ class EditProfilePage extends StatelessWidget {
         title: Text('Edit Profile'),
         actions: [
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              navController.uploadImage();
+            },
             child: Text(
               'UPDATE',
               style: TextStyle(
@@ -35,87 +38,100 @@ class EditProfilePage extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Container(
-            height: Get.size.height * 0.24,
-            child: Stack(
-              alignment: Alignment.bottomCenter,
-              children: [
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Container(
-                      height: Get.size.height * 0.2,
-                      width: Get.size.width * 0.99,
-                      padding: EdgeInsets.all(5),
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(4),
-                              topRight: Radius.circular(4)),
-                          child: Image.network(
-                            navController.profile!.image!,
-                            fit: BoxFit.cover,
-                            loadingBuilder: (context, child, loadingProgress) {
-                              if (loadingProgress == null) {
-                                return child;
-                              } else {
-                                return Center(
-                                    child: CircularProgressIndicator());
-                              }
-                            },
+          GetBuilder<NavController>(builder: (controller) {
+            return Container(
+              height: Get.size.height * 0.24,
+              child: Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  Align(
+                      alignment: Alignment.topCenter,
+                      child: Container(
+                          height: Get.size.height * 0.2,
+                          width: Get.size.width * 0.99,
+                          padding: EdgeInsets.all(5),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(4),
+                                topRight: Radius.circular(4)),
+                            child: controller.selectedImage == null
+                                ? Image.network(
+                                    navController.profile!.image!,
+                                    fit: BoxFit.cover,
+                                    loadingBuilder:
+                                        (context, child, loadingProgress) {
+                                      if (loadingProgress == null) {
+                                        return child;
+                                      } else {
+                                        return Center(
+                                            child: CircularProgressIndicator());
+                                      }
+                                    },
+                                  )
+                                : Container(
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: FileImage(
+                                                controller.selectedImage!),
+                                            fit: BoxFit.cover)),
+                                  ),
                           ))),
-                ),
-                Container(
-                  padding: EdgeInsets.all(5),
-                  height: Get.size.width * 0.3,
-                  width: Get.size.width * 0.3,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Get.theme.scaffoldBackgroundColor),
-                  child: ClipOval(
-                    child: navController.selectedImage.value == null
-                        ? Image.network(
-                            navController.profile!.image!,
-                            fit: BoxFit.cover,
-                            loadingBuilder: (context, child, loadingProgress) {
-                              if (loadingProgress == null) {
-                                return child;
-                              } else {
-                                return Center(
-                                    child: CircularProgressIndicator());
-                              }
-                            },
-                          )
-                        : Container(
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: FileImage(
-                                        navController.selectedImage.value!))),
-                          ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: Padding(
-                    padding: const EdgeInsets.all(15),
+                  Container(
+                    padding: EdgeInsets.all(5),
+                    height: Get.size.width * 0.3,
+                    width: Get.size.width * 0.3,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Get.theme.scaffoldBackgroundColor),
                     child: ClipOval(
-                      child: InkWell(
-                        onTap: () async {
-                          await navController.pickImage();
-                        },
-                        child: Container(
-                          padding: EdgeInsets.all(8),
-                          color: Colors.blue,
-                          child: Icon(
-                            Iconsax.camera,
-                            color: Colors.white,
+                      child: controller.selectedImage == null
+                          ? Image.network(
+                              navController.profile!.image!,
+                              fit: BoxFit.cover,
+                              loadingBuilder:
+                                  (context, child, loadingProgress) {
+                                if (loadingProgress == null) {
+                                  return child;
+                                } else {
+                                  return Center(
+                                      child: CircularProgressIndicator());
+                                }
+                              },
+                            )
+                          : Container(
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image:
+                                          FileImage(controller.selectedImage!),
+                                      fit: BoxFit.cover)),
+                            ),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Padding(
+                      padding: const EdgeInsets.all(15),
+                      child: ClipOval(
+                        child: InkWell(
+                          onTap: () async {
+                            await navController.pickImage();
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(8),
+                            color: Colors.blue,
+                            child: Icon(
+                              Iconsax.camera,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                )
-              ],
-            ),
-          ),
+                  )
+                ],
+              ),
+            );
+          }),
           SizedBox(
             height: 20,
           ),
@@ -129,6 +145,12 @@ class EditProfilePage extends StatelessWidget {
               hint: 'update your bio ... ',
               label: 'Bio',
               icons: Iconsax.user),
+          defaultTextField(
+              controller: nameController,
+              hint: 'update your phone ... ',
+              icons: Iconsax.user,
+              label: 'Phone'),
+
           /*    Text(
             navController.profile!.name!,
             style: Get.textTheme.titleSmall,

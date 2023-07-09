@@ -3,14 +3,10 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase/Controllers/Services/user_services.dart';
 import 'package:firebase/Modules/user.dart';
-import 'package:firebase/Views/Home%20Screens/home_page.dart';
-import 'package:firebase/Views/Home%20Screens/messeg_page.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-
-import '../../Views/Home Screens/settings_page.dart';
-import '../../Views/Home Screens/users_page.dart';
 
 class NavController extends GetxController {
   RxBool isloading = false.obs;
@@ -67,8 +63,9 @@ class NavController extends GetxController {
     isloading.value = false;
   }
 
-  Rx<File?> selectedImage = null.obs;
+  File? selectedImage;
 
+  final storage = firebase_storage.FirebaseStorage.instance;
 ////////////////////////////////////////////////////////////////////////////
   colorchange(int index) {
     for (var i = 0; i <= currentpageclr.length - 1; i++) {
@@ -86,17 +83,47 @@ class NavController extends GetxController {
     try {
       final ImagePicker _imagePicker = ImagePicker();
       final XFile? image =
-          await _imagePicker.pickImage(source: ImageSource.gallery);
+          await _imagePicker.pickImage(source: ImageSource.camera);
 
       if (image != null) {
-        selectedImage.value = File(image.path);
-        print(image.path);
+        print(
+            "THIS IS IMAGE PAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAATH${image.path}");
+        print(selectedImage);
+        selectedImage = File(image.path);
+        print(selectedImage);
+        update();
       } else {
         print('You didnt pick any image');
       }
     } on Exception catch (e) {
       print(e);
     }
+  }
+
+  String imageUrl = '';
+  void uploadImage() {
+    storage
+        .ref()
+        .child('users/${Uri.file(selectedImage!.path).pathSegments.last}')
+        .putFile(selectedImage!)
+        .then((p0) {
+      print(p0);
+      p0.ref.getDownloadURL().then((value) {
+        print(value);
+        imageUrl = value;
+      });
+    }).onError((error, stackTrace) => null);
+  }
+
+  void updatuser() {
+    profile!.toJson();
+
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(profile.uid)
+        .update(profile.toJson())
+        .then((value) => null)
+        .onError((error, stackTrace) {});
   }
 
   Future<AppUser?> getUser() async {
