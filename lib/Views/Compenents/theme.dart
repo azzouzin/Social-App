@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 final lightTheme = ThemeData(
@@ -42,28 +43,24 @@ final darkTheme = ThemeData(
       accentColor: Colors.yellow,
     ));
 
-class ThemeBuilder extends StatefulWidget {
-  final Widget Function(BuildContext context, ThemeData themeData) builder;
-
-  const ThemeBuilder({required this.builder});
-
-  @override
-  _ThemeBuilderState createState() => _ThemeBuilderState();
-}
-
-class _ThemeBuilderState extends State<ThemeBuilder> {
-  bool isDarkTheme = false;
-
-  void toggleTheme() {
-    setState(() {
-      isDarkTheme = !isDarkTheme;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final themeData = isDarkTheme ? darkTheme : lightTheme;
-
-    return widget.builder(context, themeData);
-  }
+Widget defaultbutton(
+    {required Function onTap, required String child, required witdh}) {
+  return InkWell(
+    onTap: () {
+      onTap();
+    },
+    child: Container(
+      width: witdh,
+      height: 40,
+      child: OutlinedButton(
+        onPressed: () {},
+        child: Center(
+          child: Text(
+            child,
+            style: Get.textTheme.headlineLarge?.copyWith(color: Colors.blue),
+          ),
+        ),
+      ),
+    ),
+  );
 }

@@ -108,7 +108,11 @@ class NavController extends GetxController {
 
   String imageUrl = '';
   void uploadImage({required name, required bio, required phone}) async {
+    print('name =========== $name');
+    print(bio);
+    print(phone);
     isloading.value = true;
+
     await storage
         .ref()
         .child('users/${Uri.file(selectedImage!.path).pathSegments.last}')
@@ -119,14 +123,15 @@ class NavController extends GetxController {
         print(value);
         imageUrl = value;
         profile!.image = imageUrl;
-
         FirebaseFirestore.instance
             .collection('users')
             .doc(profile!.uid)
             .update(profile!.toMap())
             .then((value) {
-          print('OK User Updated');
+          print('OK Photo User Updated');
+          updatuser(name: name, bio: bio, phone: phone);
           isloading.value = false;
+
           Get.toNamed('/settings');
           imageUrl = '';
         }).onError((error, stackTrace) {
@@ -138,17 +143,16 @@ class NavController extends GetxController {
       print(e);
       isloading.value = false;
     });
-    // updatuser(name: name, bio: bio, phone: phone);
   }
 
   void updatuser({required name, required bio, required phone}) {
-    if (name != null) {
+    if (name != '') {
       profile!.name = name;
     }
-    if (bio != null) {
+    if (bio != '') {
       profile!.bio = bio;
     }
-    if (phone != null) {
+    if (phone != '') {
       profile!.phone = phone;
     }
 

@@ -43,7 +43,7 @@ class EditProfilePage extends StatelessWidget {
       body: Column(
         children: [
           GetBuilder<NavController>(builder: (controller) {
-            return controller.isloading.value
+            return controller.isloading.value == true
                 ? LinearProgressIndicator()
                 : Container();
           }),
@@ -148,15 +148,15 @@ class EditProfilePage extends StatelessWidget {
               controller: nameController,
               hint: 'update your name ... ',
               icons: Iconsax.user,
-              label: 'UserName'),
+              label: 'update your name : ${navController.profile!.name!}'),
           defaultTextField(
               controller: bioController,
-              hint: 'update your bio ... ',
+              hint: 'update your bio : ${navController.profile!.bio!}',
               label: 'Bio',
               icons: Iconsax.user),
           defaultTextField(
               controller: phoneController,
-              hint: 'update your phone ... ',
+              hint: 'update your number : ${navController.profile!.phone!}',
               icons: Iconsax.user,
               label: 'Phone'),
 
