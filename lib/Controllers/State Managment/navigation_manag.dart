@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase/Controllers/Services/user_services.dart';
@@ -11,7 +12,14 @@ import 'package:image_picker/image_picker.dart';
 class NavController extends GetxController {
   RxBool isloading = false.obs;
 
-  AppUser? profile = AppUser(email: 'azz', bio: 'bio', image: 'image');
+  AppUser? profile = AppUser(
+      email: 'azz',
+      bio: 'bio',
+      image: 'image',
+      isEmailV: false,
+      name: "Unknown",
+      phone: 'Unknown',
+      uid: 'Unkown');
 
   RxString appbartitle = 'Home'.obs;
 
@@ -77,8 +85,6 @@ class NavController extends GetxController {
     }
   }
 
-  selectimage(File file) {}
-
   Future<void> pickImage() async {
     try {
       final ImagePicker _imagePicker = ImagePicker();
@@ -101,8 +107,9 @@ class NavController extends GetxController {
   }
 
   String imageUrl = '';
-  void uploadImage() {
-    storage
+  void uploadImage({required name, required bio, required phone}) async {
+    isloading.value = true;
+    await storage
         .ref()
         .child('users/${Uri.file(selectedImage!.path).pathSegments.last}')
         .putFile(selectedImage!)
@@ -111,19 +118,50 @@ class NavController extends GetxController {
       p0.ref.getDownloadURL().then((value) {
         print(value);
         imageUrl = value;
+        profile!.image = imageUrl;
+
+        FirebaseFirestore.instance
+            .collection('users')
+            .doc(profile!.uid)
+            .update(profile!.toMap())
+            .then((value) {
+          print('OK User Updated');
+          isloading.value = false;
+          Get.toNamed('/settings');
+          imageUrl = '';
+        }).onError((error, stackTrace) {
+          print(e);
+          isloading.value = false;
+        });
       });
-    }).onError((error, stackTrace) => null);
+    }).onError((error, stackTrace) {
+      print(e);
+      isloading.value = false;
+    });
+    // updatuser(name: name, bio: bio, phone: phone);
   }
 
-  void updatuser() {
-    profile!.toJson();
+  void updatuser({required name, required bio, required phone}) {
+    if (name != null) {
+      profile!.name = name;
+    }
+    if (bio != null) {
+      profile!.bio = bio;
+    }
+    if (phone != null) {
+      profile!.phone = phone;
+    }
 
     FirebaseFirestore.instance
         .collection('users')
-        .doc(profile.uid)
-        .update(profile.toJson())
-        .then((value) => null)
-        .onError((error, stackTrace) {});
+        .doc(profile!.uid)
+        .update(profile!.toMap())
+        .then((value) {
+      print('OK User Updated');
+      imageUrl = '';
+    }).onError((error, stackTrace) {
+      print(e);
+    });
   }
 
   Future<AppUser?> getUser() async {
@@ -131,9 +169,11 @@ class NavController extends GetxController {
   }
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-
+    isloading.value = true;
+    profile = await getUser();
+    isloading.value = true;
     // Perform initialization tasks here
 
     // ...

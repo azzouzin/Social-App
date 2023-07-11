@@ -12,6 +12,7 @@ import '../Compenents/utils.dart';
 class EditProfilePage extends StatelessWidget {
   TextEditingController nameController = TextEditingController();
   TextEditingController bioController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   EditProfilePage({super.key});
   NavController navController = Get.find();
 
@@ -24,7 +25,10 @@ class EditProfilePage extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () {
-              navController.uploadImage();
+              navController.uploadImage(
+                  name: nameController.text,
+                  bio: bioController.text,
+                  phone: phoneController.text);
             },
             child: Text(
               'UPDATE',
@@ -38,6 +42,11 @@ class EditProfilePage extends StatelessWidget {
       ),
       body: Column(
         children: [
+          GetBuilder<NavController>(builder: (controller) {
+            return controller.isloading.value
+                ? LinearProgressIndicator()
+                : Container();
+          }),
           GetBuilder<NavController>(builder: (controller) {
             return Container(
               height: Get.size.height * 0.24,
@@ -141,12 +150,12 @@ class EditProfilePage extends StatelessWidget {
               icons: Iconsax.user,
               label: 'UserName'),
           defaultTextField(
-              controller: nameController,
+              controller: bioController,
               hint: 'update your bio ... ',
               label: 'Bio',
               icons: Iconsax.user),
           defaultTextField(
-              controller: nameController,
+              controller: phoneController,
               hint: 'update your phone ... ',
               icons: Iconsax.user,
               label: 'Phone'),
