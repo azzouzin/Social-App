@@ -59,9 +59,16 @@ class Postitem extends StatelessWidget {
                 ],
               ),
 
-              Image.network(
-                imgs[1],
-                scale: 30,
+              Column(
+                children: [
+                  SizedBox(
+                    width: 30,
+                    height: 30,
+                    child: Image.asset(
+                      'assets/ver.png',
+                    ),
+                  ),
+                ],
               ),
               Expanded(child: Container()),
               //three dots
@@ -88,16 +95,18 @@ class Postitem extends StatelessWidget {
           ),
           ClipRRect(
             borderRadius: BorderRadius.circular(5),
-            child: Image.network(
-              post.photo,
-              loadingBuilder: (context, child, loadingProgress) {
-                if (loadingProgress == null) {
-                  return child;
-                } else {
-                  return Center(child: CircularProgressIndicator());
-                }
-              },
-            ),
+            child: post.postImage == null
+                ? Container()
+                : Image.network(
+                    post.postImage!,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) {
+                        return child;
+                      } else {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                    },
+                  ),
           ),
           SizedBox(
             height: 5,

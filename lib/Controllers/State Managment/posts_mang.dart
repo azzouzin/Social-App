@@ -14,7 +14,7 @@ import '../Services/user_services.dart';
 class PostController extends GetxController {
   bool isloading = false;
   PostsServices postsServices = PostsServices();
-  RxList posts = [].obs;
+  List<Post> posts = [];
   File? postimage;
   Future<void> creatnewpost({
     required String text,
@@ -51,23 +51,28 @@ class PostController extends GetxController {
     update();
     FirebaseFirestore.instance.collection('posts').get().then((value) {
       value.docs.forEach((element) {
-        posts.add(Post.fromJson(element.data() as String));
+        posts.add(Post.fromMap(element.data()));
 
-        Get.showSnackbar(GetSnackBar(
-            title: 'Welcome Back ',
-            icon: Icon(
-              Iconsax.user,
-            )));
-        isloading = false;
         print(posts);
       });
-    }).onError((error, stackTrace) {
+
       Get.showSnackbar(GetSnackBar(
-          title: error.toString(),
+          duration: Duration(seconds: 3),
+          message: 'Welcome Back ',
+          icon: Icon(
+            Iconsax.user,
+          )));
+      isloading = false;
+      update();
+    }).onError((error, stackTrace) {
+      print(error.toString());
+      Get.showSnackbar(GetSnackBar(
+          message: error.toString(),
           icon: Icon(
             Iconsax.warning_2,
           )));
       isloading = false;
+      update();
     });
   }
 
