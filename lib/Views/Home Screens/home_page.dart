@@ -92,12 +92,14 @@ class _HomepageState extends State<Homepage> {
                 return Column(
                   children: [
                     Postitem(Post(
+                        uid: '',
+                        postImage: '',
                         date: 'August 1 2023  11:06 pm',
                         name: "Azzouz Merouani",
-                        desc:
+                        text:
                             "this is random text this is random textthis is random textthis is random textthis is random textthis is random textthis is random text ",
                         photo: imgs.last,
-                        hashtags: '#alger #dz #fpl #palastine')),
+                        tags: '#alger #dz #fpl #palastine')),
                     SizedBox(
                       height: 10,
                     )

@@ -2,8 +2,9 @@
 import 'dart:convert';
 
 class Post {
-  const Post({
+  Post({
     required this.date,
+    required this.uid,
     required this.name,
     required this.text,
     required this.photo,
@@ -15,7 +16,8 @@ class Post {
   final String photo;
   final String tags;
   final String date;
-  final String postImage;
+  final String uid;
+  String? postImage;
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -25,6 +27,7 @@ class Post {
       'tags': tags,
       'date': date,
       'postImage': postImage,
+      'uid': uid,
     };
   }
 
@@ -35,6 +38,7 @@ class Post {
       photo: map['photo'] as String,
       tags: map['tags'] as String,
       date: map['date'] as String,
+      uid: map['uid'] as String,
       postImage: map['postImage'] as String,
     );
   }

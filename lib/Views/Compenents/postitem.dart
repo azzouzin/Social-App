@@ -74,14 +74,14 @@ class Postitem extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10.0),
             child: Text(
-              post.desc,
+              post.text,
               style: Get.textTheme.titleSmall!.copyWith(fontSize: 13),
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(bottom: 10),
             child: Text(
-              post.hashtags,
+              post.tags,
               style: Get.textTheme.titleSmall!
                   .copyWith(fontSize: 13, color: Colors.blue),
             ),

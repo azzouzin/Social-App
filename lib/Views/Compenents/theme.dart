@@ -45,20 +45,18 @@ final darkTheme = ThemeData(
 
 Widget defaultbutton(
     {required Function onTap, required String child, required witdh}) {
-  return InkWell(
-    onTap: () {
-      onTap();
-    },
-    child: Container(
-      width: witdh,
-      height: 40,
-      child: OutlinedButton(
-        onPressed: () {},
-        child: Center(
-          child: Text(
-            child,
-            style: Get.textTheme.headlineLarge?.copyWith(color: Colors.blue),
-          ),
+  return Container(
+    width: witdh,
+    height: 40,
+    child: OutlinedButton(
+      onPressed: () {
+        print('botton Clicked');
+        onTap();
+      },
+      child: Center(
+        child: Text(
+          child,
+          style: Get.textTheme.headlineLarge?.copyWith(color: Colors.blue),
         ),
       ),
     ),
