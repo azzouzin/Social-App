@@ -11,6 +11,7 @@ class Post {
     required this.tags,
     required this.postImage,
   });
+
   final String name;
   final String text;
   final String photo;

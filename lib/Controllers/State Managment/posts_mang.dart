@@ -15,6 +15,11 @@ class PostController extends GetxController {
   bool isloading = false;
   PostsServices postsServices = PostsServices();
   List<Post> posts = [];
+  List<String> postsids = [];
+  List<int> likes = [];
+
+  List<String> comments = [];
+
   File? postimage;
   Future<void> creatnewpost({
     required String text,
@@ -46,14 +51,28 @@ class PostController extends GetxController {
     update();
   }
 
-  void getposts() {
+  void getposts() async {
     isloading = true;
     update();
-    FirebaseFirestore.instance.collection('posts').get().then((value) {
+    await getComments();
+    FirebaseFirestore.instance.collection('posts').get().then((value) async {
+      var i = 0;
       value.docs.forEach((element) {
-        posts.add(Post.fromMap(element.data()));
+        element.reference.collection('likes').get().then((value) {
+          print(value.docs.length);
+          likes.add(value.docs.length);
+
+          posts.add(Post.fromMap(element.data()));
+          postsids.add(element.id);
+          update();
+        }).catchError((e) {
+          print(e);
+        });
 
         print(posts);
+
+        print(comments[i].length);
+        i = i + 1;
       });
 
       Get.showSnackbar(GetSnackBar(
@@ -74,6 +93,47 @@ class PostController extends GetxController {
       isloading = false;
       update();
     });
+  }
+
+  void likePost(String profileid, int index) {
+    print(
+        "Like Called on post id ${postsids[index]} from account id $profileid");
+    FirebaseFirestore.instance
+        .collection('posts')
+        .doc(postsids[index])
+        .collection('likes')
+        .doc(profileid)
+        .set({'liked': true}).then((value) {
+      print('seccess');
+    }).onError((error, stackTrace) {});
+  }
+
+  Future<void> getComments() async {
+    QuerySnapshot postsSnapshot =
+        await FirebaseFirestore.instance.collection('posts').get();
+    for (DocumentSnapshot postDoc in postsSnapshot.docs) {
+      QuerySnapshot commentsSnapshot =
+          await postDoc.reference.collection('comments').get();
+      for (DocumentSnapshot commentDoc in commentsSnapshot.docs) {
+        String comment = commentDoc.get('comment');
+        comments.add(comment);
+        int commentLength = comment.length;
+        print("Comment Length: $commentLength, Comment: $comment");
+      }
+    }
+  }
+
+  void addcomment(String profileid, int index, String coment) {
+    print(
+        "Comment Called on post id ${postsids[index]} from account id $profileid");
+    FirebaseFirestore.instance
+        .collection('posts')
+        .doc(postsids[index])
+        .collection('comments')
+        .doc(profileid)
+        .set({'comment': coment}).then((value) {
+      print('seccess comment add');
+    }).onError((error, stackTrace) {});
   }
 
   @override

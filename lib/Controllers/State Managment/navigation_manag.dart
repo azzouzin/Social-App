@@ -112,7 +112,7 @@ class NavController extends GetxController {
     print(bio);
     print(phone);
     isloading.value = true;
-
+    update();
     await storage
         .ref()
         .child('users/${Uri.file(selectedImage!.path).pathSegments.last}')
@@ -137,11 +137,13 @@ class NavController extends GetxController {
         }).onError((error, stackTrace) {
           print(e);
           isloading.value = false;
+          update();
         });
       });
     }).onError((error, stackTrace) {
       print(e);
       isloading.value = false;
+      update();
     });
   }
 

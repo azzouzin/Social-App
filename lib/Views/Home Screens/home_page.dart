@@ -2,7 +2,6 @@ import 'package:firebase/Controllers/State%20Managment/navigation_manag.dart';
 import 'package:firebase/Controllers/State%20Managment/posts_mang.dart';
 import 'package:firebase/Modules/post.dart';
 import 'package:firebase/Views/Compenents/bottomnavbar.dart';
-import 'package:firebase/Views/Compenents/postitem.dart';
 import 'package:firebase/Views/Compenents/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -47,7 +46,7 @@ class _HomepageState extends State<Homepage> {
             vertical: Get.size.width * 0.03, horizontal: Get.size.width * 0.01),
         child: GetBuilder<PostController>(builder: (controler) {
           return controler.isloading == true
-              ? CircularProgressIndicator()
+              ? Center(child: CircularProgressIndicator())
               : ListView.builder(
                   itemCount: postController.posts.length + 1,
                   itemBuilder: (BuildContext context, int index) {
@@ -95,16 +94,18 @@ class _HomepageState extends State<Homepage> {
                     } else {
                       return Column(
                         children: [
-                          Postitem(Post(
-                              uid: '',
-                              postImage:
-                                  postController.posts[index - 1].postImage,
-                              date: postController.posts[index - 1].date
-                                  .substring(0, 11),
-                              name: postController.posts[index - 1].name,
-                              text: postController.posts[index - 1].text,
-                              photo: imgs.last,
-                              tags: postController.posts[index - 1].tags)),
+                          postitem(
+                              Post(
+                                  uid: postController.posts[index - 1].uid,
+                                  postImage:
+                                      postController.posts[index - 1].postImage,
+                                  date: postController.posts[index - 1].date
+                                      .substring(0, 11),
+                                  name: postController.posts[index - 1].name,
+                                  text: postController.posts[index - 1].text,
+                                  photo: imgs.last,
+                                  tags: postController.posts[index - 1].tags),
+                              index - 1),
                           SizedBox(
                             height: 10,
                           )
@@ -113,6 +114,265 @@ class _HomepageState extends State<Homepage> {
                     }
                   });
         }),
+      ),
+    );
+  }
+
+  Widget postitem(Post post, int index) {
+    TextEditingController textEditingController = TextEditingController();
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(blurRadius: 5, color: Colors.black.withOpacity(0.5))
+          ]),
+      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      margin: EdgeInsets.symmetric(horizontal: 5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              //Profile picture
+              ClipOval(
+                child: SizedBox(
+                  width: 50,
+                  height: 50,
+                  child: Image.network(
+                    post.photo,
+                    scale: 10,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              )
+              //username + date
+              ,
+              SizedBox(
+                width: 20,
+              ),
+
+              Column(
+                crossAxisAlignment: CrossAxisAlignment
+                    .start, // Align elements to start from the same point on the right
+                children: [
+                  Text(
+                    post.name,
+                    style: Get.textTheme.titleSmall,
+                  ),
+                  Text(
+                    post.date,
+                    style: Get.textTheme.bodySmall,
+                  ),
+                ],
+              ),
+
+              Column(
+                children: [
+                  SizedBox(
+                    width: 30,
+                    height: 30,
+                    child: Image.asset(
+                      'assets/ver.png',
+                    ),
+                  ),
+                ],
+              ),
+              Expanded(child: Container()),
+              //three dots
+              Icon(Iconsax.more)
+            ],
+          ),
+          Divider(
+            thickness: 1,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10.0),
+            child: Text(
+              post.text,
+              textAlign: TextAlign.start,
+              style: Get.textTheme.titleSmall!.copyWith(fontSize: 13),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: Text(
+              post.tags,
+              style: Get.textTheme.titleSmall!
+                  .copyWith(fontSize: 13, color: Colors.blue),
+            ),
+          ),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(5),
+            child: post.postImage == null
+                ? Container()
+                : Image.network(
+                    post.postImage!,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) {
+                        return child;
+                      } else {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                    },
+                  ),
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          //LIKES AND COMMENTS
+          Row(
+            children: [
+              Icon(
+                Iconsax.lovely,
+                color: Colors.red,
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                postController.likes[index].toString(),
+                style: TextStyle(color: Colors.grey),
+              ),
+              Expanded(child: Container()),
+              Icon(
+                Iconsax.messages_25,
+                color: Colors.red,
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                '1200 Comments',
+                style: TextStyle(color: Colors.grey),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Divider(
+            thickness: 1,
+          ),
+
+          //Display Comments
+          Container(
+            height: Get.height * 0.2,
+            child: ListView.separated(
+                itemBuilder: (context, i) {
+                  return Row(
+                    children: [
+                      //Profile picture
+                      ClipOval(
+                        child: SizedBox(
+                          width: 40,
+                          height: 40,
+                          child: Image.network(
+                            imgs.first,
+                            scale: 10,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      //Comment
+                      Expanded(
+                        child: Text(
+                          postController.comments[index],
+                          style: Get.textTheme.titleSmall,
+                        ),
+                      ),
+
+                      InkWell(
+                        onTap: () {
+                          postController.likePost(
+                              navController.profile!.uid!, index);
+                        },
+                        child: Icon(
+                          Iconsax.heart,
+                          color: Colors.red,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        'Like',
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                    ],
+                  );
+                },
+                separatorBuilder: (context, i) {
+                  return Divider(
+                    thickness: 5,
+                  );
+                },
+                itemCount: postController.comments[index].length),
+          ),
+
+          //PUT IN COMMENT
+          Row(
+            children: [
+              //Profile picture
+              ClipOval(
+                child: SizedBox(
+                  width: 40,
+                  height: 40,
+                  child: Image.network(
+                    navController.profile!.image!,
+                    scale: 10,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              //Comment
+              Expanded(
+                child: TextField(
+                  controller: textEditingController,
+                  style: Get.textTheme.bodySmall,
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Write a comment ...'),
+                ),
+              ),
+
+              InkWell(
+                onTap: () {
+                  postController.addcomment(navController.profile!.uid!, index,
+                      textEditingController.text);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Icon(Iconsax.message_add),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  postController.likePost(navController.profile!.uid!, index);
+                },
+                child: Icon(
+                  Iconsax.lovely1,
+                  color: Colors.red,
+                ),
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                'Like',
+                style: TextStyle(color: Colors.grey),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
