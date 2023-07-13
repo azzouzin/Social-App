@@ -22,10 +22,10 @@ void main() async {
     theme: lightTheme,
     darkTheme: darkTheme,
     themeMode: Get.isDarkMode ? ThemeMode.dark : ThemeMode.light,
-    initialRoute: '/home',
+    initialRoute: '/',
     getPages: [
       GetPage(name: '/', page: (() => LoginScreen()), binding: AuthBindings()),
-      GetPage(
+      GetPage(s
         name: '/register',
         page: (() => RegisterScreen()),
       ),

@@ -1,3 +1,5 @@
+import 'package:firebase/Controllers/State%20Managment/users_manag.dart';
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -9,168 +11,79 @@ import '../Compenents/utils.dart';
 class MessegePage extends StatelessWidget {
   MessegePage({super.key});
   NavController navController = Get.find();
+  UsersController userController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: Obx(() {
-            return Text(navController.appbartitle.value);
-          }),
-          actions: [
-            Icon(
-              Iconsax.notification,
-              color: Colors.black,
-            ),
-            SizedBox(width: 16),
-            Icon(
-              Iconsax.search_normal4,
-              color: Colors.black,
-            ),
-            SizedBox(width: 16),
-          ]),
-      bottomNavigationBar: BottomNavBar(),
-      body: Column(
-        children: [
-          Container(
-            height: Get.size.height * 0.24,
-            child: Stack(
-              alignment: Alignment.bottomCenter,
-              children: [
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Container(
-                      height: Get.size.height * 0.2,
-                      width: Get.size.width * 0.99,
-                      padding: EdgeInsets.all(5),
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(4),
-                              topRight: Radius.circular(4)),
-                          child: Image.network(
-                            imgs[2],
-                            fit: BoxFit.cover,
-                          ))),
-                ),
-                Container(
-                  padding: EdgeInsets.all(5),
-                  height: Get.size.width * 0.3,
-                  width: Get.size.width * 0.3,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Get.theme.scaffoldBackgroundColor),
-                  child: ClipOval(
-                    child: Image.network(
-                      imgs[2],
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Text(
-            'Azzouz Merouani',
-            style: Get.textTheme.titleSmall,
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            'My Bio ...',
-            style: Get.textTheme.bodySmall,
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Row(
-            children: [
-              Expanded(
-                  child: InkWell(
-                onTap: () {},
-                child: Column(
-                  children: [
-                    Text(
-                      '100',
-                      style: Get.textTheme.titleSmall,
-                    ),
-                    Text(
-                      'Post',
-                      style: Get.textTheme.bodySmall,
-                    ),
-                  ],
-                ),
-              )),
-              Expanded(
-                  child: InkWell(
-                onTap: () {},
-                child: Column(
-                  children: [
-                    Text(
-                      '100',
-                      style: Get.textTheme.titleSmall,
-                    ),
-                    Text(
-                      'Post',
-                      style: Get.textTheme.bodySmall,
-                    ),
-                  ],
-                ),
-              )),
-              Expanded(
-                  child: InkWell(
-                onTap: () {},
-                child: Column(
-                  children: [
-                    Text(
-                      '100',
-                      style: Get.textTheme.titleSmall,
-                    ),
-                    Text(
-                      'Post',
-                      style: Get.textTheme.bodySmall,
-                    ),
-                  ],
-                ),
-              )),
-              Expanded(
-                  child: InkWell(
-                onTap: () {},
-                child: Column(
-                  children: [
-                    Text(
-                      '100',
-                      style: Get.textTheme.titleSmall,
-                    ),
-                    Text(
-                      'Post',
-                      style: Get.textTheme.bodySmall,
-                    ),
-                  ],
-                ),
-              ))
-            ],
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          InkWell(
-            onTap: () {},
-            child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 10),
-                width: Get.size.width,
-                height: 40,
-                decoration: BoxDecoration(
-                    color: Colors.blue, borderRadius: BorderRadius.circular(5)),
-                child: Center(
-                  child: Text(
-                    'Edit Profile',
-                    style: Get.textTheme.headlineLarge,
-                  ),
-                )),
-          )
-        ],
-      ),
-    );
+        floatingActionButton: FloatingActionButton(onPressed: () {
+          userController.getallusers();
+        }),
+        appBar: AppBar(
+            automaticallyImplyLeading: false,
+            title: Obx(() {
+              return Text(navController.appbartitle.value);
+            }),
+            actions: [
+              Icon(
+                Iconsax.notification,
+                color: Colors.black,
+              ),
+              SizedBox(width: 16),
+              Icon(
+                Iconsax.search_normal4,
+                color: Colors.black,
+              ),
+              SizedBox(width: 16),
+            ]),
+        bottomNavigationBar: BottomNavBar(),
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: userController.appusers.isEmpty
+              ? Text(
+                  'There is no one here',
+                  style: Get.textTheme.titleSmall,
+                )
+              : ListView.separated(
+                  physics: BouncingScrollPhysics(),
+                  itemBuilder: (context, i) {
+                    return InkWell(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          //Profile picture
+                          ClipOval(
+                            child: SizedBox(
+                              width: 50,
+                              height: 50,
+                              child: Image.network(
+                                userController.appusers[i].image ??
+                                    'https://img.freepik.com/photos-gratuite/lapin-dessin-anime-mignon-genere-par-ai_23-2150288877.jpg?size=626&ext=jpg',
+                                scale: 10,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          )
+                          //username + date
+                          ,
+                          SizedBox(
+                            width: 20,
+                          ),
+
+                          Text(
+                            userController.appusers[i].name,
+                            style: Get.textTheme.titleSmall,
+                          ),
+
+                          //    Expanded(child: Container()),
+                          //three dots
+                          //   Icon(Iconsax.more)
+                        ],
+                      ),
+                    );
+                  },
+                  separatorBuilder: (context, i) => Divider(thickness: 2),
+                  itemCount: userController.appusers.length),
+        ));
   }
 }

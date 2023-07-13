@@ -27,20 +27,44 @@ final lightTheme = ThemeData(
       // Add more properties to customize the TextTheme
     ),
     primaryColor: Colors.blue,
+    cardColor: Colors.white,
     scaffoldBackgroundColor: Colors.white,
     colorScheme: ColorScheme.fromSwatch(
       brightness: Brightness.light,
-      accentColor: Colors.red,
+      accentColor: Colors.black,
     ));
 
 final darkTheme = ThemeData(
     fontFamily: GoogleFonts.poppins().fontFamily,
-    // Add your dark theme properties here
+    appBarTheme: AppBarTheme(
+      titleTextStyle: TextStyle(
+          color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold),
+
+      // shadowColor: Colors.transparent,
+      elevation: 0,
+      backgroundColor: Colors.white,
+    ),
+
+    // Add your light theme properties here
     // For example:
+    textTheme: TextTheme(
+      bodySmall: TextStyle(
+          color: Colors.white, fontSize: 13, fontWeight: FontWeight.w700),
+      headlineLarge: TextStyle(
+          color: Colors.black, fontSize: 17, fontWeight: FontWeight.w900),
+
+      titleSmall: TextStyle(
+          color: Colors.white, fontSize: 15, fontWeight: FontWeight.w900),
+      bodyMedium: TextStyle(
+          color: Colors.black, fontSize: 12, fontWeight: FontWeight.w700),
+      // Add more properties to customize the TextTheme
+    ),
+    cardColor: Color.fromARGB(255, 18, 1, 37),
+    scaffoldBackgroundColor: Colors.black,
     primaryColor: Colors.indigo,
     colorScheme: ColorScheme.fromSwatch(
       brightness: Brightness.dark,
-      accentColor: Colors.yellow,
+      accentColor: Colors.white,
     ));
 
 Widget defaultbutton(

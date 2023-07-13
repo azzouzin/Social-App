@@ -123,7 +123,7 @@ class _HomepageState extends State<Homepage> {
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
-          color: Colors.white,
+          color: Get.theme.cardColor,
           boxShadow: [
             BoxShadow(blurRadius: 5, color: Colors.black.withOpacity(0.5))
           ]),
@@ -282,7 +282,7 @@ class _HomepageState extends State<Homepage> {
                       //Comment
                       Expanded(
                         child: Text(
-                          postController.comments[index],
+                          postController.comments[index][i],
                           style: Get.textTheme.titleSmall,
                         ),
                       ),

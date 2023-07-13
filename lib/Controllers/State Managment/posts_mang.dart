@@ -18,7 +18,7 @@ class PostController extends GetxController {
   List<String> postsids = [];
   List<int> likes = [];
 
-  List<String> comments = [];
+  List<List<String>> comments = [];
 
   File? postimage;
   Future<void> creatnewpost({
@@ -109,17 +109,22 @@ class PostController extends GetxController {
   }
 
   Future<void> getComments() async {
+    var i = 0;
     QuerySnapshot postsSnapshot =
         await FirebaseFirestore.instance.collection('posts').get();
     for (DocumentSnapshot postDoc in postsSnapshot.docs) {
+      comments.add([]);
       QuerySnapshot commentsSnapshot =
           await postDoc.reference.collection('comments').get();
       for (DocumentSnapshot commentDoc in commentsSnapshot.docs) {
         String comment = commentDoc.get('comment');
-        comments.add(comment);
-        int commentLength = comment.length;
-        print("Comment Length: $commentLength, Comment: $comment");
+
+        comments[i].add(comment);
+        int commentLength = comment[i].length;
+        print(
+            "Comment Length: $commentLength, For $i post . Comment: $comment");
       }
+      i = i + 1;
     }
   }
 
