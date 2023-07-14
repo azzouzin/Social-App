@@ -5,6 +5,7 @@ import 'package:firebase/Views/Home%20Screens/home_page.dart';
 import 'package:firebase/Views/Home%20Screens/settings_page.dart';
 import 'package:firebase/Views/Home%20Screens/users_page.dart';
 import 'package:firebase/Views/Login%20Screens/login_page.dart';
+import 'package:firebase/Views/Login%20Screens/onbord.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,16 +19,19 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(GetMaterialApp(
-    title: 'Sports Channels',
+    title: 'Flutter Chat',
     theme: lightTheme,
     darkTheme: darkTheme,
     themeMode: Get.isDarkMode ? ThemeMode.dark : ThemeMode.light,
     initialRoute: '/',
     getPages: [
-      GetPage(name: '/', page: (() => LoginScreen()), binding: AuthBindings()),
-      GetPage(s
+      GetPage(name: '/', page: (() => OnBord())),
+      GetPage(
+          name: '/login', page: (() => LoginScreen()), binding: AuthBindings()),
+      GetPage(
         name: '/register',
         page: (() => RegisterScreen()),
+        binding: AuthBindings(),
       ),
       GetPage(
           name: '/home',

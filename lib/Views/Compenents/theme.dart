@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 final lightTheme = ThemeData(
-    appBarTheme: AppBarTheme(
+    appBarTheme: const AppBarTheme(
       titleTextStyle: TextStyle(
           color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold),
 
@@ -14,7 +14,12 @@ final lightTheme = ThemeData(
     fontFamily: GoogleFonts.poppins().fontFamily,
     // Add your light theme properties here
     // For example:
-    textTheme: TextTheme(
+    textTheme: const TextTheme(
+      titleLarge: TextStyle(
+          color: Color.fromARGB(255, 15, 15, 15),
+          fontSize: 25,
+          fontWeight: FontWeight.w900),
+
       bodySmall: TextStyle(
           color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w700),
       headlineLarge: TextStyle(
@@ -36,7 +41,7 @@ final lightTheme = ThemeData(
 
 final darkTheme = ThemeData(
     fontFamily: GoogleFonts.poppins().fontFamily,
-    appBarTheme: AppBarTheme(
+    appBarTheme: const AppBarTheme(
       titleTextStyle: TextStyle(
           color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold),
 
@@ -47,11 +52,13 @@ final darkTheme = ThemeData(
 
     // Add your light theme properties here
     // For example:
-    textTheme: TextTheme(
+    textTheme: const TextTheme(
       bodySmall: TextStyle(
           color: Colors.white, fontSize: 13, fontWeight: FontWeight.w700),
       headlineLarge: TextStyle(
           color: Colors.black, fontSize: 17, fontWeight: FontWeight.w900),
+      titleLarge: TextStyle(
+          color: Colors.white, fontSize: 25, fontWeight: FontWeight.w900),
 
       titleSmall: TextStyle(
           color: Colors.white, fontSize: 15, fontWeight: FontWeight.w900),
@@ -59,7 +66,7 @@ final darkTheme = ThemeData(
           color: Colors.black, fontSize: 12, fontWeight: FontWeight.w700),
       // Add more properties to customize the TextTheme
     ),
-    cardColor: Color.fromARGB(255, 18, 1, 37),
+    cardColor: const Color.fromARGB(255, 18, 1, 37),
     scaffoldBackgroundColor: Colors.black,
     primaryColor: Colors.indigo,
     colorScheme: ColorScheme.fromSwatch(
