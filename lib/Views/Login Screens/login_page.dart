@@ -33,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
             SingleChildScrollView(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
                     height: 70,
@@ -164,19 +164,20 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Image.asset('assets/gg.png'),
                     ),
                   ),
-                  TextButton(
-                      onPressed: () {
-                        Get.toNamed('/register');
-                      },
-                      child: Text(
-                        'not a member ? Register now',
-                        style: Get.textTheme.titleSmall!
-                            .copyWith(fontWeight: FontWeight.w600),
-                      )),
-                  ElevatedButton(
-                    onPressed: () => Get.toNamed('/register'),
-                    child: Text('Register with Email/Password'),
-                    style: ElevatedButton.styleFrom(primary: Color(0xFF80ed99)),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: TextButton(
+                        onPressed: () {
+                          Get.toNamed('/register');
+                        },
+                        child: Text(
+                          'not a member ? Register now',
+                          style: Get.textTheme.titleSmall!
+                              .copyWith(fontWeight: FontWeight.w600),
+                        )),
                   ),
                 ],
               ),

@@ -23,7 +23,7 @@ void main() async {
     theme: lightTheme,
     darkTheme: darkTheme,
     themeMode: Get.isDarkMode ? ThemeMode.dark : ThemeMode.light,
-    initialRoute: '/',
+    initialRoute: '/home',
     getPages: [
       GetPage(name: '/', page: (() => OnBord())),
       GetPage(

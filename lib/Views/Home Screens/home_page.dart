@@ -259,7 +259,7 @@ class _HomepageState extends State<Homepage> {
 
           //Display Comments
           Container(
-            height: Get.height * 0.2,
+            height: Get.height * 0.135,
             child: ListView.separated(
                 itemBuilder: (context, i) {
                   return Row(
@@ -270,7 +270,7 @@ class _HomepageState extends State<Homepage> {
                           width: 40,
                           height: 40,
                           child: Image.network(
-                            imgs.first,
+                            postController.usercomment[index][i]!.image!,
                             scale: 10,
                             fit: BoxFit.cover,
                           ),
@@ -281,9 +281,19 @@ class _HomepageState extends State<Homepage> {
                       ),
                       //Comment
                       Expanded(
-                        child: Text(
-                          postController.comments[index][i],
-                          style: Get.textTheme.titleSmall,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              postController.usercomment[index][i]!.name!,
+                              style: Get.textTheme.titleSmall!
+                                  .copyWith(fontWeight: FontWeight.normal),
+                            ),
+                            Text(
+                              postController.comments[index][i],
+                              style: Get.textTheme.titleSmall!,
+                            ),
+                          ],
                         ),
                       ),
 

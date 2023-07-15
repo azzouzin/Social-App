@@ -16,6 +16,7 @@ Widget defaultTextField(
     padding: EdgeInsets.all(8),
     child: TextField(
       controller: controller,
+      obscureText: label == 'Password' ? true : false,
       decoration: InputDecoration(
         labelText: label,
         hintText: hint,

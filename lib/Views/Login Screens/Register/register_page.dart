@@ -1,6 +1,9 @@
 import 'package:firebase/Controllers/State%20Managment/auth_manag.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
+
+import '../../Compenents/utils.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -10,6 +13,7 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _passwordController2 = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   AuthControl authControl = Get.find();
@@ -24,84 +28,152 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Stack(
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                TextField(
-                  controller: _nameController,
-                  decoration: InputDecoration(
-                    labelText: 'Name',
-                    filled: true,
-                    fillColor: Colors.white,
-                  ),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Stack(
+            children: [
+              SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      'Hello!',
+                      style: Get.textTheme.titleLarge,
+                    ),
+                    const SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        const FlutterLogo(
+                          size: 60,
+                        ),
+                        Image.asset(
+                          'assets/firebase.png',
+                          scale: 5,
+                        )
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    defaultTextField(
+                      hint: 'Write Your Name',
+                      icons: Iconsax.user,
+                      label: 'Name',
+                      controller: _nameController,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    defaultTextField(
+                        controller: _emailController,
+                        icons: Iconsax.message,
+                        hint: 'Email',
+                        label: 'Email'),
+                    const SizedBox(height: 10.0),
+                    defaultTextField(
+                        controller: _passwordController,
+                        label: 'Password',
+                        hint: 'Password',
+                        icons: Iconsax.password_check),
+                    const SizedBox(height: 10.0),
+                    defaultTextField(
+                        controller: _passwordController2,
+                        icons: Iconsax.password_check,
+                        hint: "Confirme Password",
+                        label: "Password"),
+                    defaultTextField(
+                        controller: _phoneController,
+                        icons: Iconsax.clock,
+                        hint: "Phone",
+                        label: "Phone Number"),
+                    const SizedBox(height: 10),
+                    ElevatedButton(
+                      onPressed: () {
+                        if (_passwordController.text !=
+                            _passwordController2.text) {
+                          Get.snackbar('The Passwords Dosent Match',
+                              "The Passwords Dosent Match");
+                        } else {
+                          authControl.register(
+                              _emailController,
+                              _passwordController,
+                              _nameController,
+                              _phoneController,
+                              false);
+                        }
+                      },
+                      child: Text(
+                        'Sign Up',
+                        style: Get.textTheme.titleSmall!
+                            .copyWith(color: Colors.white, fontSize: 20),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        fixedSize: Size(Get.width * 0.9, 60),
+                        primary: const Color.fromARGB(255, 33, 123, 158),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 8.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          width: Get.width * 0.3,
+                          height: 2,
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(colors: [
+                            Colors.transparent,
+                            Colors.black.withOpacity(0.5)
+                          ])),
+                        ),
+                        Text(
+                          'Or continue with',
+                          style: Get.textTheme.bodySmall!
+                              .copyWith(fontWeight: FontWeight.bold),
+                        ),
+                        Container(
+                          width: Get.width * 0.3,
+                          height: 2,
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(colors: [
+                            Colors.black.withOpacity(0.5),
+                            Colors.transparent,
+                          ])),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8.0),
+                    ElevatedButton(
+                      onPressed: () {
+                        authControl.register(
+                            _emailController,
+                            _passwordController,
+                            _nameController,
+                            _phoneController,
+                            true);
+                      },
+                      child: Image.asset("assets/gg.png"),
+                      style: ElevatedButton.styleFrom(
+                        fixedSize: Size(Get.width * 0.9, 60),
+                        primary: const Color.fromARGB(255, 206, 206, 206),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                TextField(
-                  controller: _emailController,
-                  decoration: InputDecoration(
-                    labelText: 'Email',
-                    filled: true,
-                    fillColor: Colors.white,
-                  ),
-                ),
-                SizedBox(height: 16.0),
-                TextField(
-                  controller: _passwordController,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    filled: true,
-                    fillColor: Colors.white,
-                  ),
-                  obscureText: true,
-                ),
-                SizedBox(height: 16.0),
-                TextField(
-                  controller: _phoneController,
-                  decoration: InputDecoration(
-                    labelText: 'phone',
-                    filled: true,
-                    fillColor: Colors.white,
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    authControl.register(_emailController, _passwordController,
-                        _nameController, _phoneController, false);
-                  },
-                  child: Text('Register with Email/Password'),
-                  style: ElevatedButton.styleFrom(primary: Color(0xFF80ed99)),
-                ),
-                SizedBox(height: 8.0),
-                ElevatedButton(
-                  onPressed: () {
-                    authControl.register(_emailController, _passwordController,
-                        _nameController, _phoneController, true);
-                  },
-                  child: Text('Register with Google'),
-                  style: ElevatedButton.styleFrom(primary: Color(0xFF80ed99)),
-                ),
-                SizedBox(height: 8.0),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text(
-                    'Back to login',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-              ],
-            ),
-            Obx(() {
-              return Center(
-                  child: authControl.isloading.value == true
-                      ? CircularProgressIndicator()
-                      : Container());
-            }),
-          ],
+              ),
+              Obx(() {
+                return Center(
+                    child: authControl.isloading.value == true
+                        ? const CircularProgressIndicator()
+                        : Container());
+              }),
+            ],
+          ),
         ),
       ),
     );

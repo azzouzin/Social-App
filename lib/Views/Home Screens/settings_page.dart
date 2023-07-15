@@ -101,9 +101,13 @@ class SettingsPage extends StatelessWidget {
                     SizedBox(
                       height: 10,
                     ),
-                    Text(
-                      navController.profile!.bio!,
-                      style: Get.textTheme.bodySmall,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        navController.profile!.bio!,
+                        textAlign: TextAlign.center,
+                        style: Get.textTheme.bodySmall,
+                      ),
                     ),
                     SizedBox(
                       height: 20,

@@ -51,4 +51,31 @@ class UserServices {
       // ...
     }
   }
+
+  Future<AppUser?> getspecificuser(userid) async {
+    {
+      DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc('${userid}')
+          .get();
+      if (documentSnapshot.exists) {
+        print("THE USER ID ${documentSnapshot.data()}}");
+        var json = jsonEncode(documentSnapshot.data());
+        theUser = AppUser.fromJson(json);
+
+        // Do something with the retrieved data
+        print(theUser.bio);
+        print(theUser.email);
+        print(theUser.name);
+        print(theUser.phone);
+        print(theUser.uid);
+        return theUser;
+      } else {
+        print('We didnt find any id');
+        return null;
+
+        // ...
+      }
+    }
+  }
 }

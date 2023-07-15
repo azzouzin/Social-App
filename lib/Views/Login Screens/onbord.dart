@@ -33,13 +33,27 @@ class _OnBordState extends State<OnBord> {
               ),
             ),
           ),
-          SizedBox(
-            width: Get.width * 0.5,
-            child: Text(
-              'Meet Flutter Community',
-              textAlign: TextAlign.center,
-              style: Get.textTheme.titleLarge,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                width: Get.width * 0.4,
+                child: Text(
+                  'Made With',
+                  textAlign: TextAlign.center,
+                  style: Get.textTheme.titleLarge,
+                ),
+              ),
+              Expanded(
+                child: FlutterLogo(
+                  size: 40,
+                ),
+              ),
+              Image.asset(
+                'assets/firebase.png',
+                scale: 5,
+              )
+            ],
           ),
           SizedBox(
             width: Get.width * 0.8,

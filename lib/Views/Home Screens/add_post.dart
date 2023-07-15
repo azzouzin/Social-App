@@ -22,10 +22,14 @@ class AddPost extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () {
-              postController.creatnewpost(
-                  text: textEditingController.text,
-                  date: DateTime.now().toString(),
-                  tags: tagsController.text);
+              postController
+                  .creatnewpost(
+                      text: textEditingController.text,
+                      date: DateTime.now().toString(),
+                      tags: tagsController.text)
+                  .then((value) {
+                Get.back();
+              });
             },
             child: Text(
               'POST',
@@ -48,128 +52,131 @@ class AddPost extends StatelessWidget {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-        child: Column(
-          children: [
-            GetBuilder<PostController>(builder: (controller) {
-              if (controller.isloading == true) {
-                return LinearProgressIndicator();
-              } else {
-                return Container();
-              }
-            }),
-            //Profile
-            Row(
-              children: [
-                Container(
-                  height: Get.size.width * 0.2,
-                  width: Get.size.width * 0.2,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Get.theme.scaffoldBackgroundColor),
-                  child: ClipOval(
-                    child: Image.network(
-                      navController.profile!.image!,
-                      fit: BoxFit.cover,
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) {
-                          return child;
-                        } else {
-                          return Center(child: CircularProgressIndicator());
-                        }
-                      },
+      body: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  GetBuilder<PostController>(builder: (controller) {
+                    if (controller.isloading == true) {
+                      return LinearProgressIndicator();
+                    } else {
+                      return Container();
+                    }
+                  }),
+                  //Profile
+                  Row(
+                    children: [
+                      Container(
+                        height: Get.size.width * 0.2,
+                        width: Get.size.width * 0.2,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Get.theme.scaffoldBackgroundColor),
+                        child: ClipOval(
+                          child: Image.network(
+                            navController.profile!.image!,
+                            fit: BoxFit.cover,
+                            loadingBuilder: (context, child, loadingProgress) {
+                              if (loadingProgress == null) {
+                                return child;
+                              } else {
+                                return Center(
+                                    child: CircularProgressIndicator());
+                              }
+                            },
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(10),
+                        child: SizedBox(
+                          height: Get.size.width * 0.2,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                navController.profile!.name!,
+                                style: Get.textTheme.titleSmall,
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                'public',
+                                style: Get.textTheme.bodySmall,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    width: Get.width,
+                    child: TextFormField(
+                      maxLines: 10,
+                      controller: textEditingController,
+                      decoration: InputDecoration(
+                          hintMaxLines: 10,
+                          border: InputBorder.none,
+                          hintText:
+                              "What's on your mind ? ${navController.profile!.name!}"),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(10),
-                  child: SizedBox(
-                    height: Get.size.width * 0.2,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          navController.profile!.name!,
-                          style: Get.textTheme.titleSmall,
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          'public',
-                          style: Get.textTheme.bodySmall,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Expanded(
-                child: Container(
-              width: Get.width,
-              child: TextFormField(
-                controller: textEditingController,
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText:
-                        "What's on your mind ? ${navController.profile!.name!}"),
-              ),
-            )),
 
-            GetBuilder<PostController>(builder: (controller) {
-              return ClipRRect(
-                borderRadius: BorderRadius.circular(4),
-                child: Container(
-                    color: Colors.black.withOpacity(0.5),
-                    height: Get.size.height * 0.2,
-                    width: Get.size.width * 0.99,
-                    padding: EdgeInsets.all(5),
-                    child: ClipRRect(
+                  GetBuilder<PostController>(builder: (controller) {
+                    return ClipRRect(
                       borderRadius: BorderRadius.circular(4),
-                      child: postController.postimage == null
-                          ? Center(
-                              child: Text('Add Some Images'),
-                            )
-                          : Container(
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image:
-                                          FileImage(postController.postimage!),
-                                      fit: BoxFit.cover)),
-                            ),
-                    )),
-              );
-            }),
-
-            Row(
+                      child: Container(
+                          color: Colors.black.withOpacity(0.5),
+                          height: Get.size.height * 0.2,
+                          width: Get.size.width * 0.99,
+                          padding: EdgeInsets.all(5),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(4),
+                            child: postController.postimage == null
+                                ? Center(
+                                    child: Text('Add Some Images'),
+                                  )
+                                : Container(
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: FileImage(
+                                                postController.postimage!),
+                                            fit: BoxFit.cover)),
+                                  ),
+                          )),
+                    );
+                  }),
+                ],
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Row(
               children: [
                 defaultbutton(
-                    witdh: Get.size.width * 0.45,
+                    witdh: Get.size.width * 0.5,
                     child: 'Add Photos',
                     onTap: () async {
                       print('hihhihi');
                       postController.pickimage();
                     }),
                 defaultbutton(
-                    witdh: Get.size.width * 0.45,
+                    witdh: Get.size.width * 0.5,
                     child: 'Add tags #',
                     onTap: () {
                       Get.dialog(
                         AlertDialog(
                           title: Text('Tags #'),
-                          content: Container(
-                            height: Get.height * 3,
-                            child: Column(
-                              children: [
-                                Text('Enter You post tags'),
-                                TextField(
-                                  controller: tagsController,
-                                ),
-                              ],
-                            ),
+                          content: TextField(
+                            controller: tagsController,
                           ),
                           actions: [
                             TextButton(
@@ -185,8 +192,8 @@ class AddPost extends StatelessWidget {
                     }),
               ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
       bottomNavigationBar: BottomNavBar(),
     );

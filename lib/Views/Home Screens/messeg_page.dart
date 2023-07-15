@@ -1,4 +1,6 @@
+import 'package:firebase/Controllers/Bindings/home_bindings.dart';
 import 'package:firebase/Controllers/State%20Managment/users_manag.dart';
+import 'package:firebase/Views/User%20Screens/chat_screen.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -47,39 +49,50 @@ class MessegePage extends StatelessWidget {
                   physics: BouncingScrollPhysics(),
                   itemBuilder: (context, i) {
                     return InkWell(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          //Profile picture
-                          ClipOval(
-                            child: SizedBox(
-                              width: 50,
-                              height: 50,
-                              child: Image.network(
-                                userController.appusers[i].image ??
-                                    'https://img.freepik.com/photos-gratuite/lapin-dessin-anime-mignon-genere-par-ai_23-2150288877.jpg?size=626&ext=jpg',
-                                scale: 10,
-                                fit: BoxFit.cover,
-                              ),
+                      onTap: () {
+                        print('GOING TOOOOOOOOOOOOO');
+                        Get.to(
+                            () => ChatScreen(
+                                  userController.appusers[i],
+                                ),
+                            binding: HomeBindings());
+                      },
+                      child: userController.appusers[i].image ==
+                              navController.profile!.image
+                          ? Container()
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                //Profile picture
+                                ClipOval(
+                                  child: SizedBox(
+                                    width: 50,
+                                    height: 50,
+                                    child: Image.network(
+                                      userController.appusers[i].image ??
+                                          'https://img.freepik.com/photos-gratuite/lapin-dessin-anime-mignon-genere-par-ai_23-2150288877.jpg?size=626&ext=jpg',
+                                      scale: 10,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                )
+                                //username + date
+                                ,
+                                SizedBox(
+                                  width: 20,
+                                ),
+
+                                Text(
+                                  userController.appusers[i].name,
+                                  style: Get.textTheme.titleSmall,
+                                ),
+
+                                //    Expanded(child: Container()),
+                                //three dots
+                                //   Icon(Iconsax.more)
+                              ],
                             ),
-                          )
-                          //username + date
-                          ,
-                          SizedBox(
-                            width: 20,
-                          ),
-
-                          Text(
-                            userController.appusers[i].name,
-                            style: Get.textTheme.titleSmall,
-                          ),
-
-                          //    Expanded(child: Container()),
-                          //three dots
-                          //   Icon(Iconsax.more)
-                        ],
-                      ),
                     );
                   },
                   separatorBuilder: (context, i) => Divider(thickness: 2),

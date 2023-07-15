@@ -41,13 +41,16 @@ final lightTheme = ThemeData(
 
 final darkTheme = ThemeData(
     fontFamily: GoogleFonts.poppins().fontFamily,
-    appBarTheme: const AppBarTheme(
+    appBarTheme: AppBarTheme(
+      color: Colors.black,
       titleTextStyle: TextStyle(
-          color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold),
+        color: Colors.white,
+        fontSize: 25,
+        fontWeight: FontWeight.bold,
+      ),
 
       // shadowColor: Colors.transparent,
       elevation: 0,
-      backgroundColor: Colors.white,
     ),
 
     // Add your light theme properties here

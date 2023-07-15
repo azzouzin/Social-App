@@ -43,7 +43,11 @@ class AuthControl extends GetxController {
       bool withgoogle) async {
     changeloadingstate();
     if (withgoogle == true) {
-      response = await authServices.registerWithGoogle();
+      try {
+        response = await authServices.registerWithGoogle();
+      } catch (e) {
+        Get.snackbar('Error with Google', e.toString());
+      }
     } else {
       response = await authServices.registerUserWithEmailAndPassword(
         emailController.text,
