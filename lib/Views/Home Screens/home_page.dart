@@ -259,70 +259,197 @@ class _HomepageState extends State<Homepage> {
 
           //Display Comments
           Container(
-            height: Get.height * 0.135,
-            child: ListView.separated(
-                itemBuilder: (context, i) {
-                  return Row(
+            height: postController.usercomment[index].length <= 2
+                ? null
+                : Get.height * 0.135,
+            child: postController.usercomment[index].length <= 2
+                ? Column(
                     children: [
-                      //Profile picture
-                      ClipOval(
-                        child: SizedBox(
-                          width: 40,
-                          height: 40,
-                          child: Image.network(
-                            postController.usercomment[index][i]!.image!,
-                            scale: 10,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      //Comment
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              postController.usercomment[index][i]!.name!,
-                              style: Get.textTheme.titleSmall!
-                                  .copyWith(fontWeight: FontWeight.normal),
-                            ),
-                            Text(
-                              postController.comments[index][i],
-                              style: Get.textTheme.titleSmall!,
-                            ),
-                          ],
-                        ),
-                      ),
+                      postController.usercomment[index].length == 1
+                          ? Row(
+                              children: [
+                                //Profile picture
+                                ClipOval(
+                                  child: SizedBox(
+                                    width: 40,
+                                    height: 40,
+                                    child: Image.network(
+                                      postController
+                                          .usercomment[index][0]!.image!,
+                                      scale: 10,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                //Comment
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        postController
+                                            .usercomment[index][0]!.name!,
+                                        style: Get.textTheme.titleSmall!
+                                            .copyWith(
+                                                fontWeight: FontWeight.normal),
+                                      ),
+                                      Text(
+                                        postController.comments[index][0],
+                                        style: Get.textTheme.titleSmall!,
+                                      ),
+                                    ],
+                                  ),
+                                ),
 
-                      InkWell(
-                        onTap: () {
-                          postController.likePost(
-                              navController.profile!.uid!, index);
-                        },
-                        child: Icon(
-                          Iconsax.heart,
-                          color: Colors.red,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text(
-                        'Like',
-                        style: TextStyle(color: Colors.grey),
-                      ),
+                                InkWell(
+                                  onTap: () {
+                                    postController.likePost(
+                                        navController.profile!.uid!, index);
+                                  },
+                                  child: Icon(
+                                    Iconsax.heart,
+                                    color: Colors.red,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  'Like',
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                              ],
+                            )
+                          : Container(),
+                      postController.usercomment[index].length == 2
+                          ? Row(
+                              children: [
+                                //Profile picture
+                                ClipOval(
+                                  child: SizedBox(
+                                    width: 40,
+                                    height: 40,
+                                    child: Image.network(
+                                      postController
+                                          .usercomment[index][1]!.image!,
+                                      scale: 10,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                //Comment
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        postController
+                                            .usercomment[index][1]!.name!,
+                                        style: Get.textTheme.titleSmall!
+                                            .copyWith(
+                                                fontWeight: FontWeight.normal),
+                                      ),
+                                      Text(
+                                        postController.comments[index][1],
+                                        style: Get.textTheme.titleSmall!,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+
+                                InkWell(
+                                  onTap: () {
+                                    postController.likePost(
+                                        navController.profile!.uid!, index);
+                                  },
+                                  child: Icon(
+                                    Iconsax.heart,
+                                    color: Colors.red,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  'Like',
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                              ],
+                            )
+                          : Container(),
                     ],
-                  );
-                },
-                separatorBuilder: (context, i) {
-                  return Divider(
-                    thickness: 5,
-                  );
-                },
-                itemCount: postController.comments[index].length),
+                  )
+                : ListView.separated(
+                    itemBuilder: (context, i) {
+                      return Row(
+                        children: [
+                          //Profile picture
+                          ClipOval(
+                            child: SizedBox(
+                              width: 40,
+                              height: 40,
+                              child: Image.network(
+                                postController.usercomment[index][i]!.image!,
+                                scale: 10,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          //Comment
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  postController.usercomment[index][i]!.name!,
+                                  style: Get.textTheme.titleSmall!
+                                      .copyWith(fontWeight: FontWeight.normal),
+                                ),
+                                Text(
+                                  postController.comments[index][i],
+                                  style: Get.textTheme.titleSmall!,
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          InkWell(
+                            onTap: () {
+                              postController.likePost(
+                                  navController.profile!.uid!, index);
+                            },
+                            child: Icon(
+                              Iconsax.heart,
+                              color: Colors.red,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            'Like',
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                        ],
+                      );
+                    },
+                    separatorBuilder: (context, i) {
+                      return Divider(
+                        thickness: 5,
+                      );
+                    },
+                    itemCount: postController.comments[index].length),
           ),
 
           //PUT IN COMMENT

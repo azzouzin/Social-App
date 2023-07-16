@@ -25,7 +25,7 @@ class AddPost extends StatelessWidget {
               postController
                   .creatnewpost(
                       text: textEditingController.text,
-                      date: DateTime.now().toString(),
+                      date: DateTime.now().toUtc().toString(),
                       tags: tagsController.text)
                   .then((value) {
                 Get.back();

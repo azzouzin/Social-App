@@ -7,6 +7,7 @@ import 'package:firebase/Views/Home%20Screens/users_page.dart';
 import 'package:firebase/Views/Login%20Screens/login_page.dart';
 import 'package:firebase/Views/Login%20Screens/onbord.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,15 +16,49 @@ import 'Views/Login Screens/Register/register_page.dart';
 import 'Views/Compenents/theme.dart';
 import 'Views/User Screens/edit_user.dart';
 
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // Handle notification when app is in background
+  print(message.data.toString());
+  Get.snackbar('on messege', message.data.toString());
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+  var token = await messaging.getToken();
+  print(token);
+//Requaset Permissions of FCM
+  NotificationSettings settings = await messaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+//On App Notifications FCM
+  FirebaseMessaging.onMessage.listen((event) {
+    print(event.data.toString());
+    Get.snackbar('on messege', event.data.toString());
+  });
+//On Click on notifications FCM
+  FirebaseMessaging.onMessageOpenedApp.listen((event) {
+    print(event.data.toString());
+    Get.snackbar('on  onMessageOpenedApp messege', event.data.toString());
+  });
+//Background Notification FCM
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
   runApp(GetMaterialApp(
     title: 'Flutter Chat',
     theme: lightTheme,
     darkTheme: darkTheme,
     themeMode: Get.isDarkMode ? ThemeMode.dark : ThemeMode.light,
-    initialRoute: '/home',
+    initialRoute: '/',
     getPages: [
       GetPage(name: '/', page: (() => OnBord())),
       GetPage(
