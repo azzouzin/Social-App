@@ -169,7 +169,7 @@ class _ChatScreenState extends State<ChatScreen> {
       alignment: Alignment.topRight,
       child: Container(
         decoration: BoxDecoration(
-            color: Colors.blue[300],
+            color: Get.theme.primaryColor,
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(raduis),
                 bottomLeft: Radius.circular(raduis),

@@ -60,19 +60,19 @@ class PostController extends GetxController {
       var i = 0;
       value.docs.forEach((element) {
         element.reference.collection('likes').get().then((value) {
-          print(value.docs.length);
           likes.add(value.docs.length);
 
           posts.add(Post.fromMap(element.data()));
           postsids.add(element.id);
+          print(element.data());
+          print(posts);
+          print("Number of posts = ${posts.length}");
+
           update();
         }).catchError((e) {
           print(e);
         });
 
-        print(posts);
-
-        print(comments[i].length);
         i = i + 1;
       });
 
@@ -124,9 +124,11 @@ class PostController extends GetxController {
         AppUser? appuser = await UserServices().getspecificuser(commentDoc.id);
         usercomment[i].add(appuser);
         comments[i].add(comment);
-        int commentLength = comment[i].length;
-        print(
-            "Comment Length: $commentLength, For $i post . Comment: $comment");
+        print("i = $i");
+        // print(comment[i].length);
+        // int commentLength = comment[i].isEmpty ? 0 : comment[i].length;
+        // print(
+        //   "Comment Length: $commentLength, For $i post . Comment: $comment");
 
         print(
             "The user is: ${appuser!.email}, For $i post . Comment: $comment");
@@ -135,7 +137,11 @@ class PostController extends GetxController {
     }
   }
 
-  void addcomment(String profileid, int index, String coment) {
+  void addcomment(String profileid, int index, String coment, AppUser appUser) {
+    comments[index].add(coment);
+
+    usercomment[index].add(appUser);
+    update();
     print(
         "Comment Called on post id ${postsids[index]} from account id $profileid");
     FirebaseFirestore.instance

@@ -35,14 +35,8 @@ class BottomNavBar extends StatelessWidget {
               label: 'add'),
           BottomNavigationBarItem(
               icon: Icon(
-                Iconsax.user,
-                color: navController.currentpageclr[3],
-              ),
-              label: 'Users'),
-          BottomNavigationBarItem(
-              icon: Icon(
                 Iconsax.setting5,
-                color: navController.currentpageclr[4],
+                color: navController.currentpageclr[3],
               ),
               label: 'settings'),
         ],

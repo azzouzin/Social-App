@@ -52,15 +52,12 @@ class NavController extends GetxController {
               ? 'Messeges'
               : i == 2
                   ? "Add Post"
-                  : i == 3
-                      ? "Users"
-                      : "Settings";
+                  : "Settings";
 
       i == 0 ? Get.offAllNamed('/home') : null;
       i == 1 ? Get.toNamed('/chats') : null;
       i == 2 ? Get.toNamed('/addpost') : null;
-      i == 3 ? Get.toNamed('/users') : null;
-      if (i == 4) {
+      if (i == 3) {
         Get.toNamed('/settings');
         profile = await getUser();
         if (profile == null) {
@@ -89,7 +86,7 @@ class NavController extends GetxController {
     try {
       final ImagePicker _imagePicker = ImagePicker();
       final XFile? image =
-          await _imagePicker.pickImage(source: ImageSource.camera);
+          await _imagePicker.pickImage(source: ImageSource.gallery);
 
       if (image != null) {
         print(
@@ -179,7 +176,7 @@ class NavController extends GetxController {
     super.onInit();
     isloading.value = true;
     profile = await getUser();
-    isloading.value = true;
+    isloading.value = false;
     // Perform initialization tasks here
 
     // ...

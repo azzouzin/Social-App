@@ -152,7 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: 10),
                   InkWell(
                     onTap: () {
-                      authControl.loginwithgoogle();
+                      Get.snackbar('Comming soon', '');
                     },
                     child: Container(
                       width: Get.width * 0.2,

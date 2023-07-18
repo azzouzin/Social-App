@@ -109,7 +109,7 @@ class UsersController extends GetxController {
     try {
       final ImagePicker _imagePicker = ImagePicker();
       final XFile? image =
-          await _imagePicker.pickImage(source: ImageSource.camera);
+          await _imagePicker.pickImage(source: ImageSource.gallery);
 
       if (image != null) {
         print("THIS IS IMAGE Path${image.path}");

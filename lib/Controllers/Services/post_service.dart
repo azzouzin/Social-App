@@ -19,31 +19,46 @@ class PostsServices {
     required String tags,
   }) async {
     String? msg;
-    await storage
-        .ref()
-        .child('posts/${Uri.file(selectedImage!.path).pathSegments.last}')
-        .putFile(selectedImage!)
-        .then((p0) {
-      print(p0);
-      p0.ref.getDownloadURL().then((value) async {
-        print("This is the value returned From Firebase Storage $value");
-        msg = value;
-        AppUser? user = await UserServices().getTheUser();
-        var post = Post(
-          date: date,
-          name: user?.name ?? 'NULL',
-          text: text,
-          photo: user?.image ?? 'NULL',
-          tags: tags,
-          postImage: value,
-          uid: user?.uid ?? 'NULL',
-        );
-        await creatpost(post);
+    if (selectedImage != null) {
+      await storage
+          .ref()
+          .child('posts/${Uri.file(selectedImage!.path).pathSegments.last}')
+          .putFile(selectedImage!)
+          .then((p0) {
+        print(p0);
+        p0.ref.getDownloadURL().then((value) async {
+          print("This is the value returned From Firebase Storage $value");
+          msg = value;
+          AppUser? user = await UserServices().getTheUser();
+          var post = Post(
+            date: date,
+            name: user?.name ?? 'NULL',
+            text: text,
+            photo: user?.image ?? 'NULL',
+            tags: tags,
+            postImage: value,
+            uid: user?.uid ?? 'NULL',
+          );
+          await creatpost(post);
+        });
+      }).onError((error, stackTrace) {
+        print(error);
+        msg = error.toString();
       });
-    }).onError((error, stackTrace) {
-      print(error);
-      msg = error.toString();
-    });
+    } else {
+      AppUser? user = await UserServices().getTheUser();
+      var post = Post(
+        date: date,
+        name: user?.name ?? 'NULL',
+        text: text,
+        photo: user?.image ?? 'NULL',
+        tags: tags,
+        postImage: 'null',
+        uid: user?.uid ?? 'NULL',
+      );
+      await creatpost(post);
+    }
+
     return msg;
   }
 
@@ -75,7 +90,7 @@ class PostsServices {
     try {
       final ImagePicker _imagePicker = ImagePicker();
       final XFile? image =
-          await _imagePicker.pickImage(source: ImageSource.camera);
+          await _imagePicker.pickImage(source: ImageSource.gallery);
 
       if (image != null) {
         print("THIS IS IMAGE Path${image.path}");

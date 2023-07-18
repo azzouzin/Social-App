@@ -36,199 +36,227 @@ class SettingsPage extends StatelessWidget {
         } else {
           return navController.isloading.value == true
               ? Center(child: CircularProgressIndicator())
-              : Column(
-                  children: [
-                    Container(
-                      height: Get.size.height * 0.24,
-                      child: Stack(
-                        alignment: Alignment.bottomCenter,
+              : SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Container(
+                        height: Get.size.height * 0.24,
+                        child: Stack(
+                          alignment: Alignment.bottomCenter,
+                          children: [
+                            Align(
+                              alignment: Alignment.topCenter,
+                              child: Container(
+                                  height: Get.size.height * 0.2,
+                                  width: Get.size.width * 0.99,
+                                  padding: EdgeInsets.all(5),
+                                  child: ClipRRect(
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(4),
+                                          topRight: Radius.circular(4)),
+                                      child: Image.network(
+                                        navController.profile!.image!,
+                                        fit: BoxFit.cover,
+                                        loadingBuilder:
+                                            (context, child, loadingProgress) {
+                                          if (loadingProgress == null) {
+                                            return child;
+                                          } else {
+                                            return Center(
+                                                child:
+                                                    CircularProgressIndicator());
+                                          }
+                                        },
+                                      ))),
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(5),
+                              height: Get.size.width * 0.3,
+                              width: Get.size.width * 0.3,
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Get.theme.scaffoldBackgroundColor),
+                              child: ClipOval(
+                                child: Image.network(
+                                  navController.profile!.image!,
+                                  fit: BoxFit.cover,
+                                  loadingBuilder:
+                                      (context, child, loadingProgress) {
+                                    if (loadingProgress == null) {
+                                      return child;
+                                    } else {
+                                      return Center(
+                                          child: CircularProgressIndicator());
+                                    }
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        navController.profile!.name!,
+                        style: Get.textTheme.titleSmall,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          navController.profile!.bio!,
+                          textAlign: TextAlign.center,
+                          style: Get.textTheme.bodySmall,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Row(
                         children: [
-                          Align(
-                            alignment: Alignment.topCenter,
+                          Expanded(
+                              child: InkWell(
+                            onTap: () {},
+                            child: Column(
+                              children: [
+                                Text(
+                                  '100',
+                                  style: Get.textTheme.titleSmall,
+                                ),
+                                Text(
+                                  'Post',
+                                  style: Get.textTheme.bodySmall,
+                                ),
+                              ],
+                            ),
+                          )),
+                          Expanded(
+                              child: InkWell(
+                            onTap: () {},
+                            child: Column(
+                              children: [
+                                Text(
+                                  '782',
+                                  style: Get.textTheme.titleSmall,
+                                ),
+                                Text(
+                                  'Friends',
+                                  style: Get.textTheme.bodySmall,
+                                ),
+                              ],
+                            ),
+                          )),
+                          Expanded(
+                              child: InkWell(
+                            onTap: () {},
+                            child: Column(
+                              children: [
+                                Text(
+                                  '25k',
+                                  style: Get.textTheme.titleSmall,
+                                ),
+                                Text(
+                                  'Followrs',
+                                  style: Get.textTheme.bodySmall,
+                                ),
+                              ],
+                            ),
+                          )),
+                          Expanded(
+                              child: InkWell(
+                            onTap: () {},
+                            child: Column(
+                              children: [
+                                Text(
+                                  '125',
+                                  style: Get.textTheme.titleSmall,
+                                ),
+                                Text(
+                                  'following',
+                                  style: Get.textTheme.bodySmall,
+                                ),
+                              ],
+                            ),
+                          ))
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        children: [
+                          InkWell(
+                            onTap: () {},
                             child: Container(
-                                height: Get.size.height * 0.2,
-                                width: Get.size.width * 0.99,
-                                padding: EdgeInsets.all(5),
-                                child: ClipRRect(
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(4),
-                                        topRight: Radius.circular(4)),
-                                    child: Image.network(
-                                      navController.profile!.image!,
-                                      fit: BoxFit.cover,
-                                      loadingBuilder:
-                                          (context, child, loadingProgress) {
-                                        if (loadingProgress == null) {
-                                          return child;
-                                        } else {
-                                          return Center(
-                                              child:
-                                                  CircularProgressIndicator());
-                                        }
-                                      },
-                                    ))),
+                              margin: EdgeInsets.symmetric(horizontal: 10),
+                              width: Get.size.width * 0.75,
+                              height: 40,
+                              child: OutlinedButton(
+                                  onPressed: () {},
+                                  child: Center(
+                                    child: Text(
+                                      'Add Photos',
+                                      style: Get.textTheme.headlineLarge
+                                          ?.copyWith(color: Colors.blue),
+                                    ),
+                                  )),
+                            ),
                           ),
-                          Container(
-                            padding: EdgeInsets.all(5),
-                            height: Get.size.width * 0.3,
-                            width: Get.size.width * 0.3,
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: OutlinedButton(
+                                onPressed: () {
+                                  Get.toNamed('/edit');
+                                },
+                                child: Icon(Iconsax.edit),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Text(
+                            'Dark Mode',
+                            style:
+                                Get.textTheme.bodySmall!.copyWith(fontSize: 15),
+                          ),
+                          AnimatedContainer(
+                            duration: Duration(milliseconds: 500),
+                            curve: Curves.easeInOut,
                             decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Get.theme.scaffoldBackgroundColor),
-                            child: ClipOval(
-                              child: Image.network(
-                                navController.profile!.image!,
-                                fit: BoxFit.cover,
-                                loadingBuilder:
-                                    (context, child, loadingProgress) {
-                                  if (loadingProgress == null) {
-                                    return child;
-                                  } else {
-                                    return Center(
-                                        child: CircularProgressIndicator());
-                                  }
+                              color:
+                                  Get.isDarkMode ? Colors.black : Colors.white,
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Switch(
+                                activeColor: Get.theme.primaryColor,
+                                value: Get.isDarkMode,
+                                onChanged: (bool value) {
+                                  print(Get.isDarkMode);
+                                  Get.changeThemeMode(Get.isDarkMode
+                                      ? ThemeMode.light
+                                      : ThemeMode.dark);
+                                  Get.offNamed('/home');
                                 },
                               ),
                             ),
                           ),
                         ],
                       ),
-                    ),
-                    Text(
-                      navController.profile!.name!,
-                      style: Get.textTheme.titleSmall,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        navController.profile!.bio!,
-                        textAlign: TextAlign.center,
-                        style: Get.textTheme.bodySmall,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                            child: InkWell(
-                          onTap: () {},
-                          child: Column(
-                            children: [
-                              Text(
-                                '100',
-                                style: Get.textTheme.titleSmall,
-                              ),
-                              Text(
-                                'Post',
-                                style: Get.textTheme.bodySmall,
-                              ),
-                            ],
-                          ),
-                        )),
-                        Expanded(
-                            child: InkWell(
-                          onTap: () {},
-                          child: Column(
-                            children: [
-                              Text(
-                                '782',
-                                style: Get.textTheme.titleSmall,
-                              ),
-                              Text(
-                                'Friends',
-                                style: Get.textTheme.bodySmall,
-                              ),
-                            ],
-                          ),
-                        )),
-                        Expanded(
-                            child: InkWell(
-                          onTap: () {},
-                          child: Column(
-                            children: [
-                              Text(
-                                '25k',
-                                style: Get.textTheme.titleSmall,
-                              ),
-                              Text(
-                                'Followrs',
-                                style: Get.textTheme.bodySmall,
-                              ),
-                            ],
-                          ),
-                        )),
-                        Expanded(
-                            child: InkWell(
-                          onTap: () {},
-                          child: Column(
-                            children: [
-                              Text(
-                                '125',
-                                style: Get.textTheme.titleSmall,
-                              ),
-                              Text(
-                                'following',
-                                style: Get.textTheme.bodySmall,
-                              ),
-                            ],
-                          ),
-                        ))
-                      ],
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      children: [
-                        InkWell(
-                          onTap: () {},
-                          child: Container(
-                            margin: EdgeInsets.symmetric(horizontal: 10),
-                            width: Get.size.width * 0.75,
-                            height: 40,
-                            child: OutlinedButton(
-                                onPressed: () {},
-                                child: Center(
-                                  child: Text(
-                                    'Add Photos',
-                                    style: Get.textTheme.headlineLarge
-                                        ?.copyWith(color: Colors.blue),
-                                  ),
-                                )),
-                          ),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
-                            child: OutlinedButton(
-                              onPressed: () {
-                                Get.toNamed('/edit');
-                              },
-                              child: Icon(Iconsax.edit),
-                            ),
-                          ),
-                        )
-                      ],
-                    )
-                  ],
+                    ],
+                  ),
                 );
         }
       }),
-      floatingActionButton: FloatingActionButton(
-          child: Icon(Get.isDarkMode ? Iconsax.moon : Iconsax.sun),
-          onPressed: () {
-            print(Get.isDarkMode);
-            Get.changeThemeMode(
-                Get.isDarkMode ? ThemeMode.light : ThemeMode.dark);
-
-            print(Get.theme.cardColor.toString());
-            print(Get.isDarkMode);
-          }),
     );
   }
 

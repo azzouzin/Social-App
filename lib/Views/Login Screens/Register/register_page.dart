@@ -37,24 +37,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text(
-                      'Hello!',
-                      style: Get.textTheme.titleLarge,
+                    Image.asset(
+                      'assets/logo1.png',
+                      scale: 12,
                     ),
-                    const SizedBox(height: 16),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        const FlutterLogo(
-                          size: 60,
-                        ),
-                        Image.asset(
-                          'assets/firebase.png',
-                          scale: 5,
-                        )
-                      ],
-                    ),
-                    const SizedBox(height: 16),
                     defaultTextField(
                       hint: 'Write Your Name',
                       icons: Iconsax.user,
@@ -147,12 +133,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     const SizedBox(height: 8.0),
                     ElevatedButton(
                       onPressed: () {
-                        authControl.register(
-                            _emailController,
-                            _passwordController,
-                            _nameController,
-                            _phoneController,
-                            true);
+                        Get.snackbar('Comming soon', '');
                       },
                       child: Image.asset("assets/gg.png"),
                       style: ElevatedButton.styleFrom(

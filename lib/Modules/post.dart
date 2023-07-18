@@ -14,7 +14,7 @@ class Post {
 
   final String name;
   final String text;
-  final String photo;
+  final String? photo;
   final String tags;
   final String date;
   final String uid;

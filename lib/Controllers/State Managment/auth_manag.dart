@@ -1,9 +1,7 @@
 import 'package:firebase/Controllers/Services/auth_services.dart';
-import 'package:firebase/Modules/user.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../Views/Home Screens/home_page.dart';
 
 class AuthControl extends GetxController {
   RxBool isloading = false.obs;
@@ -71,6 +69,7 @@ class AuthControl extends GetxController {
 
     if (response == 'ok') {
       Get.offAllNamed('/');
+      Get.snackbar('Singed out', 'See you soon');
     } else {
       Get.snackbar('Error', response);
     }

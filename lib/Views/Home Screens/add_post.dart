@@ -1,4 +1,3 @@
-import 'package:firebase/Controllers/Services/post_service.dart';
 import 'package:firebase/Controllers/State%20Managment/posts_mang.dart';
 import 'package:firebase/Views/Compenents/bottomnavbar.dart';
 import 'package:firebase/Views/Compenents/theme.dart';
