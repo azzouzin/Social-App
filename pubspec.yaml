@@ -50,7 +50,13 @@ dependencies:
   firebase_storage: ^11.2.4
   matrices: ^1.2.6
   like_button: ^2.0.5
+  flutter_launcher_icons: "^0.13.1"
 
+flutter_launcher_icons:
+   android: "launcher_icon"
+   ios: true
+   image_path: "assets/logo.png"
+   min_sdk_android: 21 # android min sdk min:16, default 21
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -81,6 +87,7 @@ flutter:
     - assets/gg.png
     - assets/firebase.png
     - assets/logo1.png
+    - assets/logo.png
     
 
   # An image asset can refer to one or more resolution-specific "variants", see

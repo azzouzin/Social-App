@@ -1,13 +1,15 @@
 import 'package:firebase/Views/Compenents/bottomnavbar.dart';
-import 'package:firebase/Views/Compenents/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
+import '../../Controllers/State Managment/auth_manag.dart';
 import '../../Controllers/State Managment/navigation_manag.dart';
 
 class SettingsPage extends StatelessWidget {
   NavController navController = Get.find();
+  AuthControl authController = Get.find();
+
   SettingsPage({super.key});
   @override
   Widget build(BuildContext context) {
@@ -251,6 +253,22 @@ class SettingsPage extends StatelessWidget {
                             ),
                           ),
                         ],
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 10),
+                        width: Get.size.width * 0.75,
+                        height: 40,
+                        child: OutlinedButton(
+                            onPressed: () {
+                              authController.logout();
+                            },
+                            child: Center(
+                              child: Text(
+                                'Log Out',
+                                style: Get.textTheme.headlineLarge
+                                    ?.copyWith(color: Colors.blue),
+                              ),
+                            )),
                       ),
                     ],
                   ),

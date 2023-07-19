@@ -77,7 +77,7 @@ void main() async {
       GetPage(
           name: '/settings',
           page: (() => SettingsPage()),
-          binding: HomeBindings()),
+          bindings: [HomeBindings(), AuthBindings()]),
       GetPage(
           name: '/users', page: (() => UsersPage()), binding: HomeBindings()),
       GetPage(
