@@ -55,6 +55,7 @@ void main() async {
 */
   runApp(GetMaterialApp(
     title: 'FireChat',
+    debugShowCheckedModeBanner: false,
     theme: lightTheme,
     darkTheme: darkTheme,
     themeMode: Get.isDarkMode ? ThemeMode.dark : ThemeMode.light,

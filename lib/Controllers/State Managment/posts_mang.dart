@@ -58,6 +58,7 @@ class PostController extends GetxController {
     await getComments();
     FirebaseFirestore.instance.collection('posts').get().then((value) async {
       var i = 0;
+
       value.docs.forEach((element) {
         element.reference.collection('likes').get().then((value) {
           likes.add(value.docs.length);
@@ -107,6 +108,20 @@ class PostController extends GetxController {
         .set({'liked': true}).then((value) {
       print('seccess');
     }).onError((error, stackTrace) {});
+  }
+
+  Future<String?> deletepost(index) async {
+    await FirebaseFirestore.instance
+        .collection('posts')
+        .doc(postsids[index])
+        .delete()
+        .then((value) {
+      return 'ok';
+    }).onError((error, stackTrace) {
+      return 'error';
+    });
+
+    return 'null';
   }
 
   Future<void> getComments() async {
