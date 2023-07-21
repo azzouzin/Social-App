@@ -37,18 +37,21 @@ class _OnBordState extends State<OnBord> {
             SizedBox(
               child: Center(
                   child: Text(
-                "Welcome to Firechat!",
+                "Welcome to Pingle!",
                 style: Get.textTheme.titleLarge,
               )),
             ),
-            Image.asset(
-              'assets/logo1.png',
-              scale: 12,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset(
+                'assets/logo1.png',
+                scale: 12,
+              ),
             ),
             SizedBox(
               width: Get.width * 0.8,
               child: Text(
-                'Firechat is the hottest new social app that allows you to easily chat and connect with friends and family.',
+                'Pingle is the hottest new social app that allows you to easily chat and connect with friends and family.',
                 textAlign: TextAlign.center,
                 style: Get.textTheme.titleSmall!
                     .copyWith(color: const Color.fromARGB(255, 102, 102, 102)),

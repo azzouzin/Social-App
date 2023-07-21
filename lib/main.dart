@@ -39,7 +39,7 @@ void main() async {
     criticalAlert: false,
     provisional: false,
     sound: true,
-  );
+  );  
 //On App Notifications FCM
   FirebaseMessaging.onMessage.listen((event) {
     print(event.data.toString());
@@ -54,7 +54,7 @@ void main() async {
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 */
   runApp(GetMaterialApp(
-    title: 'FireChat',
+    title: 'Pingle ',
     theme: lightTheme,
     darkTheme: darkTheme,
     themeMode: Get.isDarkMode ? ThemeMode.dark : ThemeMode.light,
@@ -78,8 +78,6 @@ void main() async {
           name: '/settings',
           page: (() => SettingsPage()),
           bindings: [HomeBindings(), AuthBindings()]),
-      GetPage(
-          name: '/users', page: (() => UsersPage()), binding: HomeBindings()),
       GetPage(
           name: '/chats', page: (() => MessegePage()), binding: HomeBindings()),
       GetPage(

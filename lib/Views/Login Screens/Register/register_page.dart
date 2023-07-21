@@ -37,9 +37,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Image.asset(
-                      'assets/logo1.png',
-                      scale: 12,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Image.asset(
+                        'assets/logo1.png',
+                        scale: 12,
+                      ),
                     ),
                     defaultTextField(
                       hint: 'Write Your Name',

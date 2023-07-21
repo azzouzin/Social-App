@@ -126,7 +126,7 @@ class SettingsPage extends StatelessWidget {
                             child: Column(
                               children: [
                                 Text(
-                                  '100',
+                                  '0',
                                   style: Get.textTheme.titleSmall,
                                 ),
                                 Text(
@@ -142,7 +142,7 @@ class SettingsPage extends StatelessWidget {
                             child: Column(
                               children: [
                                 Text(
-                                  '782',
+                                  '0',
                                   style: Get.textTheme.titleSmall,
                                 ),
                                 Text(
@@ -158,7 +158,7 @@ class SettingsPage extends StatelessWidget {
                             child: Column(
                               children: [
                                 Text(
-                                  '25k',
+                                  '0',
                                   style: Get.textTheme.titleSmall,
                                 ),
                                 Text(
@@ -174,7 +174,7 @@ class SettingsPage extends StatelessWidget {
                             child: Column(
                               children: [
                                 Text(
-                                  '125',
+                                  '0',
                                   style: Get.textTheme.titleSmall,
                                 ),
                                 Text(
@@ -189,37 +189,21 @@ class SettingsPage extends StatelessWidget {
                       SizedBox(
                         height: 20,
                       ),
-                      Row(
-                        children: [
-                          InkWell(
-                            onTap: () {},
-                            child: Container(
-                              margin: EdgeInsets.symmetric(horizontal: 10),
-                              width: Get.size.width * 0.75,
-                              height: 40,
-                              child: OutlinedButton(
-                                  onPressed: () {},
-                                  child: Center(
-                                    child: Text(
-                                      'Add Photos',
-                                      style: Get.textTheme.headlineLarge
-                                          ?.copyWith(color: Colors.blue),
-                                    ),
-                                  )),
+                      SizedBox(
+                        height: Get.height * 0.075,
+                        width: Get.width * 0.9,
+                        child: Expanded(
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.only(right: 8.0, left: 8.0),
+                            child: OutlinedButton(
+                              onPressed: () {
+                                Get.toNamed('/edit');
+                              },
+                              child: Icon(Iconsax.edit),
                             ),
                           ),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 8.0),
-                              child: OutlinedButton(
-                                onPressed: () {
-                                  Get.toNamed('/edit');
-                                },
-                                child: Icon(Iconsax.edit),
-                              ),
-                            ),
-                          )
-                        ],
+                        ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,

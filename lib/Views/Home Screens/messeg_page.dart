@@ -17,9 +17,6 @@ class MessegePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: FloatingActionButton(onPressed: () {
-          userController.getallusers();
-        }),
         appBar: AppBar(
             automaticallyImplyLeading: false,
             title: Obx(() {
