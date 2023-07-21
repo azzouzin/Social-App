@@ -154,6 +154,20 @@ class PostController extends GetxController {
     }).onError((error, stackTrace) {});
   }
 
+  Future<String?> deletepost(index) async {
+    await FirebaseFirestore.instance
+        .collection('posts')
+        .doc(postsids[index])
+        .delete()
+        .then((value) {
+      return 'ok';
+    }).onError((error, stackTrace) {
+      return 'error';
+    });
+
+    return 'null';
+  }
+
   @override
   void onInit() {
     // TODO: implement onInit

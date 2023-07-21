@@ -189,7 +189,41 @@ class _HomepageState extends State<Homepage> {
               ),
               Expanded(child: Container()),
               //three dots
-              Icon(Iconsax.more)
+              InkWell(
+                  onTap: () async {
+                    if (post.uid == navController.profile!.uid!) {
+                      Get.dialog(
+                        AlertDialog(
+                          content: Container(
+                            width: Get.width * 0.5,
+                            height: Get.height * 0.1,
+                            color: Colors.white,
+                            child: InkWell(
+                              onTap: () async {
+                                String? msg;
+                                msg = await postController.deletepost(index);
+                                msg == 'ok'
+                                    ? Get.snackbar('Post Deleted', '')
+                                    : Get.snackbar(
+                                        'Post Error', msg ?? 'Unkown Error');
+                              },
+                              child: Center(
+                                child: Text(
+                                  'Delet Post',
+                                  style: Get.textTheme.titleLarge!
+                                      .copyWith(color: Colors.red),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    } else {
+                      Get.snackbar("Sorry The Post isn't Yours",
+                          'to edit any post it must be yours');
+                    }
+                  },
+                  child: Icon(Iconsax.more))
             ],
           ),
           Divider(
