@@ -205,7 +205,7 @@ class _HomepageState extends State<Homepage> {
                                 msg == 'ok'
                                     ? Get.snackbar('Post Deleted', '')
                                     : Get.snackbar(
-                                        'Post Error', msg ?? 'Unkown Error');
+                                        'Post Error', 'Unkown Error');
                               },
                               child: Center(
                                 child: Text(

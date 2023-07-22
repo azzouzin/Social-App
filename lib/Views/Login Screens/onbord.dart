@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../Compenents/animatedbackground.dart';
+
 class OnBord extends StatefulWidget {
   const OnBord({super.key});
 
@@ -17,133 +19,139 @@ class _OnBordState extends State<OnBord> {
       backgroundColor: Colors.grey[200],
       body: SafeArea(
           child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Stack(
           children: [
-            SizedBox(
-              width: Get.width,
-              height: Get.height * 0.5,
-              child: Padding(
-                padding: EdgeInsets.all(10),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(30),
-                  child: Image.asset(
-                    'assets/boy.jpg',
-                    fit: BoxFit.cover,
+            AnimatedBackground(),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                  width: Get.width,
+                  height: Get.height * 0.5,
+                  child: Padding(
+                    padding: EdgeInsets.all(10),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(30),
+                      child: Image.asset(
+                        'assets/boy.jpg',
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            SizedBox(
-              child: Center(
+                SizedBox(
+                  child: Center(
+                      child: Text(
+                    "Welcome to Pingle!",
+                    style:
+                        Get.textTheme.titleLarge!.copyWith(color: Colors.white),
+                  )),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Image.asset(
+                    'assets/logo1.png',
+                    scale: 12,
+                  ),
+                ),
+                SizedBox(
+                  width: Get.width * 0.8,
                   child: Text(
-                "Welcome to Pingle!",
-                style: Get.textTheme.titleLarge,
-              )),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Image.asset(
-                'assets/logo1.png',
-                scale: 12,
-              ),
-            ),
-            SizedBox(
-              width: Get.width * 0.8,
-              child: Text(
-                'Pingle is the hottest new social app that allows you to easily chat and connect with friends and family.',
-                textAlign: TextAlign.center,
-                style: Get.textTheme.titleSmall!
-                    .copyWith(color: const Color.fromARGB(255, 102, 102, 102)),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 20),
-              child: Container(
-                  width: Get.width * 0.7,
-                  height: Get.height * 0.07,
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.white,
-                        width: 3,
-                      ),
-                      color: Colors.grey[300],
-                      borderRadius: BorderRadius.circular(15)),
-                  child: Row(
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            color1 = Colors.white;
-                            color2 = Colors.grey[300]!;
-                          });
-                        },
-                        child: AnimatedContainer(
-                          child: Center(
-                            child: Text(
-                              'Login',
-                              style: Get.textTheme.headlineLarge!
-                                  .copyWith(color: Colors.black),
+                    'Pingle is the hottest new social app that allows you to easily chat and connect with friends and family.',
+                    textAlign: TextAlign.center,
+                    style:
+                        Get.textTheme.titleSmall!.copyWith(color: Colors.white),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 20, top: 20),
+                  child: Container(
+                      width: Get.width * 0.7,
+                      height: Get.height * 0.07,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.white,
+                            width: 3,
+                          ),
+                          color: Colors.grey[300],
+                          borderRadius: BorderRadius.circular(15)),
+                      child: Row(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              setState(() {
+                                color1 = Colors.white;
+                                color2 = Colors.grey[300]!;
+                              });
+                            },
+                            child: AnimatedContainer(
+                              child: Center(
+                                child: Text(
+                                  'Login',
+                                  style: Get.textTheme.headlineLarge!
+                                      .copyWith(color: Colors.black),
+                                ),
+                              ),
+                              duration: Duration(seconds: 1),
+                              width: Get.width * 0.35,
+                              height: Get.height * 0.65,
+                              decoration: BoxDecoration(
+                                  color: color1,
+                                  borderRadius: BorderRadius.circular(10)),
                             ),
                           ),
-                          duration: Duration(seconds: 1),
-                          width: Get.width * 0.35,
-                          height: Get.height * 0.65,
-                          decoration: BoxDecoration(
-                              color: color1,
-                              borderRadius: BorderRadius.circular(10)),
-                        ),
-                      ),
-                      Expanded(
-                        child: InkWell(
-                          onTap: () {
-                            setState(() {
-                              color2 = Colors.white;
-                              color1 = Colors.grey[300]!;
-                            });
-                          },
-                          child: AnimatedContainer(
-                            child: Center(
-                              child: Text(
-                                'Register',
-                                style: Get.textTheme.headlineLarge!
-                                    .copyWith(color: Colors.black),
+                          Expanded(
+                            child: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  color2 = Colors.white;
+                                  color1 = Colors.grey[300]!;
+                                });
+                              },
+                              child: AnimatedContainer(
+                                child: Center(
+                                  child: Text(
+                                    'Register',
+                                    style: Get.textTheme.headlineLarge!
+                                        .copyWith(color: Colors.black),
+                                  ),
+                                ),
+                                duration: Duration(seconds: 1),
+                                decoration: BoxDecoration(
+                                    color: color2,
+                                    borderRadius: BorderRadius.circular(10)),
                               ),
                             ),
-                            duration: Duration(seconds: 1),
-                            decoration: BoxDecoration(
-                                color: color2,
-                                borderRadius: BorderRadius.circular(10)),
-                          ),
-                        ),
-                      )
-                    ],
-                  )),
-            ),
-            InkWell(
-              onTap: () {
-                color1 == Colors.white
-                    ? Get.toNamed('/login')
-                    : Get.toNamed('/register');
-              },
-              child: AnimatedContainer(
-                duration: Duration(seconds: 1),
-                curve: Curves.bounceIn,
-                width: Get.width * 0.35,
-                height: Get.height * 0.06,
-                decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(10)),
-                child: Center(
-                  child: Text(
-                    'Go',
-                    style: Get.textTheme.headlineLarge,
+                          )
+                        ],
+                      )),
+                ),
+                InkWell(
+                  onTap: () {
+                    color1 == Colors.white
+                        ? Get.toNamed('/login')
+                        : Get.toNamed('/register');
+                  },
+                  child: AnimatedContainer(
+                    duration: Duration(seconds: 1),
+                    curve: Curves.bounceIn,
+                    width: Get.width * 0.35,
+                    height: Get.height * 0.06,
+                    decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Center(
+                      child: Text(
+                        'Go',
+                        style: Get.textTheme.headlineLarge,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            SizedBox(
-              height: 15,
+                SizedBox(
+                  height: 15,
+                ),
+              ],
             ),
           ],
         ),

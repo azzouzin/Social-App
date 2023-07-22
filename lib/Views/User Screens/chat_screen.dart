@@ -164,7 +164,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Align mymessege(Messege messege) {
-    double raduis = messege.imgurl == null ? 10 : 20;
+    double raduis = messege.imgurl == null ? 20 : 20;
     return Align(
       alignment: Alignment.topRight,
       child: Container(
@@ -199,36 +199,55 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Align yourmessege(Messege messege) {
-    double raduis = messege.imgurl == null ? 10 : 20;
+    double raduis = messege.imgurl == null ? 20 : 20;
     return Align(
       alignment: Alignment.topLeft,
-      child: Container(
-        decoration: BoxDecoration(
-            color: Colors.grey,
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(raduis),
-                bottomRight: Radius.circular(raduis),
-                topRight: Radius.circular(raduis))),
-        padding: EdgeInsets.all(5),
-        child: messege.imgurl != null
-            ? Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
+      child: Row(
+        children: [
+          Padding(
+              padding: const EdgeInsets.only(right: 15),
+              child: ClipOval(
+                child: SizedBox(
+                  width: 50,
+                  height: 50,
+                  child: Image.network(
+                    widget.appUser.image ??
+                        'https://img.freepik.com/photos-gratuite/lapin-dessin-anime-mignon-genere-par-ai_23-2150288877.jpg?size=626&ext=jpg',
+                    scale: 10,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              )),
+          Container(
+            decoration: BoxDecoration(
+                color: Colors.grey,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(raduis),
+                    bottomRight: Radius.circular(raduis),
+                    topRight: Radius.circular(raduis))),
+            padding: EdgeInsets.all(10),
+            child: messege.imgurl != null
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        messege.text,
+                        style: Get.textTheme.titleSmall!
+                            .copyWith(color: Colors.white),
+                      ),
+                      SizedBox(height: 10),
+                      ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Image.network(messege.imgurl!))
+                    ],
+                  )
+                : Text(
                     messege.text,
                     style:
                         Get.textTheme.titleSmall!.copyWith(color: Colors.white),
                   ),
-                  SizedBox(height: 10),
-                  ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: Image.network(messege.imgurl!))
-                ],
-              )
-            : Text(
-                messege.text,
-                style: Get.textTheme.titleSmall!.copyWith(color: Colors.white),
-              ),
+          ),
+        ],
       ),
     );
   }

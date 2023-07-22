@@ -23,6 +23,11 @@ class NavController extends GetxController {
 
   RxString appbartitle = 'Home'.obs;
 
+  var count = 0.obs;
+  changestate() {
+    count++;
+  }
+
   List<Color> currentpageclr = [
     Colors.blue,
     Colors.grey,

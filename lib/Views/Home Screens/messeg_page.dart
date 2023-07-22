@@ -1,14 +1,12 @@
 import 'package:firebase/Controllers/Bindings/home_bindings.dart';
 import 'package:firebase/Controllers/State%20Managment/users_manag.dart';
 import 'package:firebase/Views/User%20Screens/chat_screen.dart';
-import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../Controllers/State Managment/navigation_manag.dart';
 import '../Compenents/bottomnavbar.dart';
-import '../Compenents/utils.dart';
 
 class MessegePage extends StatelessWidget {
   MessegePage({super.key});

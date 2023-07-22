@@ -5,6 +5,7 @@ import 'package:iconsax/iconsax.dart';
 
 import '../../Controllers/Services/auth_services.dart';
 import '../../Controllers/State Managment/auth_manag.dart';
+import '../Compenents/animatedbackground.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -27,11 +28,12 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[200],
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Stack(
-          children: [
-            SingleChildScrollView(
+      body: Stack(
+        children: [
+          AnimatedBackground(),
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -40,8 +42,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   Text(
                     "Hello Again!",
-                    style: Get.textTheme.titleLarge!
-                        .copyWith(color: const Color.fromARGB(255, 49, 49, 49)),
+                    style:
+                        Get.textTheme.titleLarge!.copyWith(color: Colors.white),
                   ),
                   SizedBox(
                     height: 30,
@@ -49,14 +51,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   Text(
                     "Welcom back you've",
                     style: Get.textTheme.titleLarge!.copyWith(
-                        fontWeight: FontWeight.normal,
-                        color: const Color.fromARGB(255, 49, 49, 49)),
+                        fontWeight: FontWeight.normal, color: Colors.white),
                   ),
                   Text(
                     "been missed",
                     style: Get.textTheme.titleLarge!.copyWith(
-                        fontWeight: FontWeight.normal,
-                        color: const Color.fromARGB(255, 49, 49, 49)),
+                        fontWeight: FontWeight.normal, color: Colors.white),
                   ),
                   SizedBox(
                     height: 50,
@@ -182,14 +182,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 ],
               ),
             ),
-            Obx(() {
-              return Center(
-                  child: authControl.isloading.value == true
-                      ? CircularProgressIndicator()
-                      : Container());
-            }),
-          ],
-        ),
+          ),
+          Obx(() {
+            return Center(
+                child: authControl.isloading.value == true
+                    ? CircularProgressIndicator()
+                    : Container());
+          }),
+        ],
       ),
     );
   }

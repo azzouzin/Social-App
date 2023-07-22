@@ -3,13 +3,13 @@ import 'package:firebase/Controllers/Bindings/home_bindings.dart';
 import 'package:firebase/Views/Home%20Screens/add_post.dart';
 import 'package:firebase/Views/Home%20Screens/home_page.dart';
 import 'package:firebase/Views/Home%20Screens/settings_page.dart';
-import 'package:firebase/Views/Home%20Screens/users_page.dart';
 import 'package:firebase/Views/Login%20Screens/login_page.dart';
 import 'package:firebase/Views/Login%20Screens/onbord.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'Controllers/State Managment/Notifications.dart';
 import 'Controllers/State Managment/middlwear.dart';
 import 'Views/Home Screens/messeg_page.dart';
 import 'Views/Login Screens/Register/register_page.dart';
@@ -58,7 +58,7 @@ void main() async {
     theme: lightTheme,
     darkTheme: darkTheme,
     themeMode: Get.isDarkMode ? ThemeMode.dark : ThemeMode.light,
-    initialRoute: '/',
+    home: NotScreen(),
     getPages: [
       GetPage(name: '/', page: (() => OnBord()), middlewares: [MyMiddelware()]),
       GetPage(

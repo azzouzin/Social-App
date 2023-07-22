@@ -33,7 +33,7 @@ class SettingsPage extends StatelessWidget {
           ]),
       bottomNavigationBar: BottomNavBar(),
       body: Obx(() {
-        if (count.value == 3000) {
+        if (navController.count.value == 3000) {
           return Container();
         } else {
           return navController.isloading.value == true
@@ -192,16 +192,13 @@ class SettingsPage extends StatelessWidget {
                       SizedBox(
                         height: Get.height * 0.075,
                         width: Get.width * 0.9,
-                        child: Expanded(
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.only(right: 8.0, left: 8.0),
-                            child: OutlinedButton(
-                              onPressed: () {
-                                Get.toNamed('/edit');
-                              },
-                              child: Icon(Iconsax.edit),
-                            ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 8.0, left: 8.0),
+                          child: OutlinedButton(
+                            onPressed: () {
+                              Get.toNamed('/edit');
+                            },
+                            child: Icon(Iconsax.edit),
                           ),
                         ),
                       ),
@@ -231,7 +228,7 @@ class SettingsPage extends StatelessWidget {
                                   Get.changeThemeMode(Get.isDarkMode
                                       ? ThemeMode.light
                                       : ThemeMode.dark);
-                                  Get.offNamed('/home');
+                                  navController.changestate();
                                 },
                               ),
                             ),
@@ -260,10 +257,5 @@ class SettingsPage extends StatelessWidget {
         }
       }),
     );
-  }
-
-  var count = 0.obs;
-  changestate() {
-    count++;
   }
 }

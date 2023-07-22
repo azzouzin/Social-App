@@ -59,13 +59,6 @@ class AddPost extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  GetBuilder<PostController>(builder: (controller) {
-                    if (controller.isloading == true) {
-                      return LinearProgressIndicator();
-                    } else {
-                      return Container();
-                    }
-                  }),
                   //Profile
                   Row(
                     children: [
@@ -131,25 +124,28 @@ class AddPost extends StatelessWidget {
                   GetBuilder<PostController>(builder: (controller) {
                     return ClipRRect(
                       borderRadius: BorderRadius.circular(4),
-                      child: Container(
-                          color: Colors.black.withOpacity(0.5),
-                          height: Get.size.height * 0.2,
-                          width: Get.size.width * 0.99,
-                          padding: EdgeInsets.all(5),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(4),
-                            child: postController.postimage == null
-                                ? Center(
-                                    child: Text('Add Some Images'),
-                                  )
-                                : Container(
-                                    decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                            image: FileImage(
-                                                postController.postimage!),
-                                            fit: BoxFit.cover)),
-                                  ),
-                          )),
+                      child: InkWell(
+                        onTap: () => postController.pickimage(),
+                        child: Container(
+                            color: Colors.black.withOpacity(0.5),
+                            height: Get.size.height * 0.2,
+                            width: Get.size.width * 0.99,
+                            padding: EdgeInsets.all(5),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(4),
+                              child: postController.postimage == null
+                                  ? Center(
+                                      child: Text('Add Some Images'),
+                                    )
+                                  : Container(
+                                      decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                              image: FileImage(
+                                                  postController.postimage!),
+                                              fit: BoxFit.cover)),
+                                    ),
+                            )),
+                      ),
                     );
                   }),
                 ],
@@ -158,40 +154,39 @@ class AddPost extends StatelessWidget {
           ),
           Align(
             alignment: Alignment.bottomCenter,
-            child: Row(
-              children: [
-                defaultbutton(
-                    witdh: Get.size.width * 0.5,
-                    child: 'Add Photos',
-                    onTap: () async {
-                      print('hihhihi');
-                      postController.pickimage();
-                    }),
-                defaultbutton(
-                    witdh: Get.size.width * 0.5,
-                    child: 'Add tags #',
-                    onTap: () {
-                      Get.dialog(
-                        AlertDialog(
-                          title: Text('Tags #'),
-                          content: TextField(
-                            controller: tagsController,
-                          ),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Get.back();
-                              },
-                              child: Text('Close'),
-                            ),
-                          ],
+            child: defaultbutton(
+                witdh: Get.size.width * 0.9,
+                child: 'Add tags #',
+                onTap: () {
+                  Get.dialog(
+                    AlertDialog(
+                      title: Text('Tags #'),
+                      content: TextField(
+                        controller: tagsController,
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Get.back();
+                          },
+                          child: Text('Close'),
                         ),
-                      );
-                      print('hihhihi');
-                    }),
-              ],
-            ),
+                      ],
+                    ),
+                  );
+                  print('hihhihi');
+                }),
           ),
+          Align(
+            alignment: Alignment.topCenter,
+            child: GetBuilder<PostController>(builder: (controller) {
+              if (controller.isloading == true) {
+                return LinearProgressIndicator();
+              } else {
+                return Container();
+              }
+            }),
+          )
         ],
       ),
       bottomNavigationBar: BottomNavBar(),
