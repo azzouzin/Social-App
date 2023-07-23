@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/Controllers/State%20Managment/Notifications.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../Modules/messege.dart';
 import '../../Modules/user.dart';
+import 'navigation_manag.dart';
 
 class UsersController extends GetxController {
   bool isloading = true;
@@ -16,6 +18,9 @@ class UsersController extends GetxController {
   List<Messege> messegelist = [];
   File? selectedImage;
   String? imgurl;
+
+  NotController notcontroller = Get.put(NotController());
+  NavController navController = Get.put(NavController());
   void getallusers() {
     isloading = true;
     update();
@@ -125,6 +130,7 @@ class UsersController extends GetxController {
   }
 
   void getMessege(String recieverid, String senderid) {
+    print('get messege called');
     isloading = true;
     update();
     FirebaseFirestore.instance
@@ -137,11 +143,17 @@ class UsersController extends GetxController {
         .snapshots()
         .listen((event) {
       messegelist = [];
-      event.docs.forEach((element) {
-        messegelist.add(Messege.fromMap(element.data()));
+      event.docs.forEach((element) async {
+        var messege = Messege.fromMap(element.data());
+        messegelist.add(messege);
         print(element.data());
 
         print(messegelist);
+        if (element == event.docs.last &&
+            messege.recieverid == navController.profile!.uid) {
+          await notcontroller.showNotification(
+              messege.recieverid, messege.text, messege.recieverid);
+        } else {}
         update();
       });
     });
@@ -152,7 +164,7 @@ class UsersController extends GetxController {
   }
 
   @override
-  void onInit() {
+  void onInit() async {
     // TODO: implement onInit
     super.onInit();
     getallusers();

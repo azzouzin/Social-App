@@ -1,3 +1,4 @@
+import 'package:firebase/Controllers/State%20Managment/users_manag.dart';
 import 'package:firebase/Views/Compenents/bottomnavbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ import '../../Controllers/State Managment/navigation_manag.dart';
 class SettingsPage extends StatelessWidget {
   NavController navController = Get.find();
   AuthControl authController = Get.find();
+  UsersController usersController = Get.find();
 
   SettingsPage({super.key});
   @override
@@ -125,10 +127,13 @@ class SettingsPage extends StatelessWidget {
                             onTap: () {},
                             child: Column(
                               children: [
-                                Text(
-                                  '0',
-                                  style: Get.textTheme.titleSmall,
-                                ),
+                                GetBuilder<NavController>(
+                                    builder: (controller) {
+                                  return Text(
+                                    " ${controller.postnumber}",
+                                    style: Get.textTheme.titleSmall,
+                                  );
+                                }),
                                 Text(
                                   'Post',
                                   style: Get.textTheme.bodySmall,
@@ -141,10 +146,12 @@ class SettingsPage extends StatelessWidget {
                             onTap: () {},
                             child: Column(
                               children: [
-                                Text(
-                                  '0',
-                                  style: Get.textTheme.titleSmall,
-                                ),
+                                Obx(() {
+                                  return Text(
+                                    usersController.appusers.length.toString(),
+                                    style: Get.textTheme.titleSmall,
+                                  );
+                                }),
                                 Text(
                                   'Friends',
                                   style: Get.textTheme.bodySmall,

@@ -25,10 +25,19 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
+    userController.messegelist.length == 0
+        ? null
+        : WidgetsBinding.instance.addPostFrameCallback((_) {
+            scrollController.jumpTo(scrollController.position.maxScrollExtent);
+          });
+  }
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      scrollController.jumpTo(scrollController.position.maxScrollExtent);
-    });
+  @override
+  void onDelete() {
+    userController.messegelist.clear();
+    print('Its Clear ${userController.messegelist}');
+
+    // Other delete logic
   }
 
   @override
@@ -58,106 +67,111 @@ class _ChatScreenState extends State<ChatScreen> {
         return GetBuilder<UsersController>(builder: (controller) {
           return controller.messegelist.isEmpty && controller.isloading == true
               ? Center(child: CircularProgressIndicator())
-              : Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: ListView.separated(
-                          controller: scrollController,
-                          reverse: false,
-                          physics: BouncingScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            var messege = controller.messegelist[index];
+              : controller.messegelist.length == 0
+                  ? Container()
+                  : Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: ListView.separated(
+                              controller: scrollController,
+                              reverse: false,
+                              physics: BouncingScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                var messege = controller.messegelist[index];
 
-                            if (messege.senderid ==
-                                navController.profile!.uid!) {
-                              return mymessege(messege);
-                            } else {
-                              return (yourmessege(messege));
-                            }
-                          },
-                          itemCount: controller.messegelist.length,
-                          separatorBuilder: (context, index) {
-                            return SizedBox(height: 15);
-                          },
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        margin: EdgeInsets.all(10),
-                        padding: EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                            border: Border.all(width: 1, color: Colors.grey),
-                            borderRadius: BorderRadius.circular(15)),
-                        child: Row(
-                          children: [
-                            Expanded(
-                                child: TextField(
-                              controller: textEditingController,
-                              decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: 'Write a messege'),
-                            )),
-                            InkWell(
-                              onTap: () {
-                                controller.uploadImage();
+                                if (messege.senderid ==
+                                    navController.profile!.uid!) {
+                                  return mymessege(messege);
+                                } else {
+                                  return (yourmessege(messege));
+                                }
                               },
-                              child: Container(
-                                margin: EdgeInsets.only(right: 10),
-                                padding: EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                    color: Colors.blue,
-                                    border: Border.all(
-                                        width: 1, color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(15)),
-                                child: Icon(
-                                  Iconsax.camera,
-                                  color: Colors.white,
-                                  size: 30,
-                                ),
-                              ),
+                              itemCount: controller.messegelist.length,
+                              separatorBuilder: (context, index) {
+                                return SizedBox(height: 15);
+                              },
                             ),
-                            InkWell(
-                              onTap: () {
-                                userController.sendMessege(
-                                    navController.profile!.uid!,
-                                    senderid: navController.profile!.uid!,
-                                    recieverid: widget.appUser.uid!,
-                                    date: DateTime.now().toString(),
-                                    text: textEditingController.text);
-                                textEditingController.clear();
-                              },
-                              child: Container(
-                                padding: EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                    color: Colors.blue,
-                                    border: Border.all(
-                                        width: 1, color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(15)),
-                                child: GetBuilder<UsersController>(
-                                    builder: (controller) {
-                                  return controller.isloading == true
-                                      ? Center(
-                                          child: CircularProgressIndicator(
-                                              color: Colors.white),
-                                        )
-                                      : Icon(
-                                          Iconsax.send1,
-                                          color: Colors.white,
-                                          size: 30,
-                                        );
-                                }),
-                              ),
-                            )
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                );
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            margin: EdgeInsets.all(10),
+                            padding: EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                                border:
+                                    Border.all(width: 1, color: Colors.grey),
+                                borderRadius: BorderRadius.circular(15)),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                    child: TextField(
+                                  controller: textEditingController,
+                                  decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: 'Write a messege'),
+                                )),
+                                InkWell(
+                                  onTap: () {
+                                    controller.uploadImage();
+                                  },
+                                  child: Container(
+                                    margin: EdgeInsets.only(right: 10),
+                                    padding: EdgeInsets.all(5),
+                                    decoration: BoxDecoration(
+                                        color: Colors.blue,
+                                        border: Border.all(
+                                            width: 1, color: Colors.grey),
+                                        borderRadius:
+                                            BorderRadius.circular(15)),
+                                    child: Icon(
+                                      Iconsax.camera,
+                                      color: Colors.white,
+                                      size: 30,
+                                    ),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    userController.sendMessege(
+                                        navController.profile!.uid!,
+                                        senderid: navController.profile!.uid!,
+                                        recieverid: widget.appUser.uid!,
+                                        date: DateTime.now().toString(),
+                                        text: textEditingController.text);
+                                    textEditingController.clear();
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.all(5),
+                                    decoration: BoxDecoration(
+                                        color: Colors.blue,
+                                        border: Border.all(
+                                            width: 1, color: Colors.grey),
+                                        borderRadius:
+                                            BorderRadius.circular(15)),
+                                    child: GetBuilder<UsersController>(
+                                        builder: (controller) {
+                                      return controller.isloading == true
+                                          ? Center(
+                                              child: CircularProgressIndicator(
+                                                  color: Colors.white),
+                                            )
+                                          : Icon(
+                                              Iconsax.send1,
+                                              color: Colors.white,
+                                              size: 30,
+                                            );
+                                    }),
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    );
         });
       }),
     );

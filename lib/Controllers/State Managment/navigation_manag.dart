@@ -11,7 +11,7 @@ import 'package:image_picker/image_picker.dart';
 
 class NavController extends GetxController {
   RxBool isloading = false.obs;
-
+  int postnumber = 0;
   AppUser? profile = AppUser(
       email: 'azz',
       bio: 'bio',
@@ -176,14 +176,30 @@ class NavController extends GetxController {
     return await UserServices().getTheUser();
   }
 
+  Future<int> getpostNumber(String uid) async {
+    // Get reference to Firestore collection
+    var usersRef = FirebaseFirestore.instance.collection('posts');
+
+// Create query for documents with matching uid field
+    var query = usersRef.where('uid', isEqualTo: uid);
+
+// Get the count of matching documents
+    var matchingDocsCount = await query.get().then((snapshot) {
+      return snapshot.size;
+    });
+
+    print('Number of documents with uid == $uid is $matchingDocsCount');
+
+    return matchingDocsCount;
+  }
+
   @override
   void onInit() async {
     super.onInit();
     isloading.value = true;
     profile = await getUser();
+    postnumber = await getpostNumber(profile!.uid!);
     isloading.value = false;
     // Perform initialization tasks here
-
-    // ...
   }
 }

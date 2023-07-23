@@ -57,8 +57,7 @@ void main() async {
     title: 'Pingle ',
     theme: lightTheme,
     darkTheme: darkTheme,
-    themeMode: Get.isDarkMode ? ThemeMode.dark : ThemeMode.light,
-    home: NotScreen(),
+    initialRoute: '/',
     getPages: [
       GetPage(name: '/', page: (() => OnBord()), middlewares: [MyMiddelware()]),
       GetPage(

@@ -18,6 +18,9 @@ import 'package:path_provider/path_provider.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
+import '../../Views/Home Screens/messeg_page.dart';
+import '../../Views/User Screens/chat_screen.dart';
+
 int id = 0;
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -170,7 +173,10 @@ class NotScreen extends StatelessWidget {
                       PaddedElevatedButton(
                         buttonText: 'Show plain notification with payload',
                         onPressed: () async {
-                          await notcontroller.showNotification();
+                          await notcontroller.showNotification(
+                              'Azzouz Merouani',
+                              'Heloo How Are You Doing ?',
+                              'id one');
                         },
                       ),
                       PaddedElevatedButton(
@@ -363,7 +369,7 @@ class NotController extends GetxController {
   late NotificationAppLaunchDetails? notificationAppLaunchDetails;
   var isloading = true.obs;
 
-  Future<void> showNotification() async {
+  Future<void> showNotification(String title, String body, String uid) async {
     const AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails('your channel id', 'your channel name',
             channelDescription: 'your channel description',
@@ -372,9 +378,8 @@ class NotController extends GetxController {
             ticker: 'ticker');
     const NotificationDetails notificationDetails =
         NotificationDetails(android: androidNotificationDetails);
-    await flutterLocalNotificationsPlugin.show(
-        id++, 'plain title', 'plain body', notificationDetails,
-        payload: 'item x');
+    await flutterLocalNotificationsPlugin
+        .show(id++, title, body, notificationDetails, payload: uid);
   }
 
   Future<void> showNotificationWithNoBody() async {
@@ -950,9 +955,7 @@ class NotController extends GetxController {
 
   void configureSelectNotificationSubject() {
     selectNotificationStream.stream.listen((String? payload) async {
-      Get.to(
-        SecondPage(payload),
-      );
+      Get.toNamed('/chats');
     });
   }
 }

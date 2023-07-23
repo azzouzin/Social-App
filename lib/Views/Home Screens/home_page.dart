@@ -276,7 +276,7 @@ class _HomepageState extends State<Homepage> {
                   ),
                   likeBuilder: (bool isLiked) {
                     return Icon(
-                      Icons.heart_broken_sharp,
+                      Iconsax.heart,
                       color: isLiked ? Colors.purple : Colors.grey,
                       size: 30,
                     );
